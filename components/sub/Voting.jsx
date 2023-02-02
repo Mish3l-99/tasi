@@ -16,8 +16,6 @@ import { MdHowToVote } from "react-icons/md";
 import { useAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
 
-import { TwitterShareButton } from "react-share";
-
 function getDate(UNIX_timestamp) {
   var a = new Date(UNIX_timestamp);
   var year = a.getFullYear();
@@ -135,35 +133,38 @@ const Voting = () => {
   return (
     <div className="w-full flex-1 p-4 shadow-md">
       <div className="flex items-center justify-between text-xl mb-8">
-        <div className="flex items-center gap-x-2">
-          <span>
-            <MdHowToVote />
-          </span>
-          <h1>التصويت :</h1>
-        </div>
-        <div className="flex items-center gap-x-1 text-sm">
-          <CiDiscount1 />
-          <span className="flex items-center gap-x-2">
-            عدد المصوتين :{" "}
-            {loading ? (
-              <div>
-                <Image
-                  alt="/"
-                  src="/icons/loading.gif"
-                  height={15}
-                  width={15}
-                  className="mx-auto"
-                />
-              </div>
-            ) : (
-              voting && <span>{voting.total}</span>
-            )}
-          </span>
+        <div>
+          <div className="flex items-center gap-x-2">
+            <span>
+              <MdHowToVote />
+            </span>
+            <h1>التصويت :</h1>
+          </div>
+          <div className="flex items-center gap-x-1 text-sm">
+            <CiDiscount1 />
+            <span className="flex items-center gap-x-2">
+              عدد المصوتين :{" "}
+              {loading ? (
+                <div>
+                  <Image
+                    alt="/"
+                    src="/icons/loading.gif"
+                    height={15}
+                    width={15}
+                    className="mx-auto"
+                  />
+                </div>
+              ) : (
+                voting && <span>{voting.total}</span>
+              )}
+            </span>
+          </div>
         </div>
         <div>
-          <TwitterShareButton
-            title="TASI Talk is Awessome, please check it out : "
-            url={"https://tasitalk.com"}
+          <a
+            href={`https://twitter.com/intent/tweet?url=https%3A%2F%2Ftasitalk.com&text=TASI%20Talk%20is%20Awesome%2C%20please%20check%20it%20out%20%3A%20`}
+            target="_blank"
+            rel="noreferrer"
           >
             <span
               dir="ltr"
@@ -172,7 +173,7 @@ const Voting = () => {
               <BsTwitter />
               Tweet
             </span>
-          </TwitterShareButton>
+          </a>
         </div>
       </div>
       <div className="flex items-center gap-x-2">
