@@ -1,16 +1,56 @@
-html,
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.me_mssg {
+  direction: rtl;
+}
+.else_mssg {
+  direction: ltr;
+}
+.else_mssg > div {
+  direction: ltr;
+}
+.else_mssg > div > div {
+  direction: rtl;
+}
+
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  direction: rtl;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+@layer base {
+  body {
+    @apply bg-white font-[Tajawal];
+  }
+  .container {
+    @apply max-w-[1245px] mx-auto px-2;
+  }
+
+  .mssg {
+    @apply flex gap-x-2 mb-1;
+  }
+  .mssg > div {
+    @apply flex-1;
+  }
+  .mssg > div > span {
+    @apply text-[12px];
+  }
+  .else_mssg > div > div {
+    @apply w-fit bg-white py-1 px-2 rounded-lg border;
+  }
+
+  .me_mssg > div > div {
+    @apply w-fit bg-blue-100 py-1 px-2 rounded-lg border;
+  }
 }
 
-* {
-  box-sizing: border-box;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
