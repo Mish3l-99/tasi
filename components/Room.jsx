@@ -6,8 +6,9 @@ import {
   onSnapshot,
   query,
 } from "firebase/firestore";
+import Image from "next/image";
 import Router, { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { AiOutlineSend } from "react-icons/ai";
@@ -87,10 +88,9 @@ const Room = ({ our_user }) => {
     []
   );
 
-  const messagesEndRef = useRef(null);
-
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const objDiv = document.getElementById("messages-container");
+    objDiv.scrollTop = objDiv.scrollHeight;
   };
 
   useEffect(() => {
@@ -123,12 +123,19 @@ const Room = ({ our_user }) => {
             محادثة مباشرة - TASI
           </p>
         </div>
-        <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center">
-          {our_user.from[0].toUpperCase()}
+        <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
+          {our_user.image === "" ? (
+            our_user.from[0].toUpperCase()
+          ) : (
+            <Image className="rounded-full" alt="/" src={our_user.image} fill />
+          )}
         </div>
       </div>
       {/* messages box */}
-      <div className="flex-1 overflow-y-auto p-2 scrollbar-hide">
+      <div
+        id="messages-container"
+        className="sticky flex-1 overflow-y-auto p-2 scrollbar-hide"
+      >
         {messages?.map((msg, i) => {
           let me = msg.user === our_user.user;
           let clas = me ? "bg-green-100" : "";
@@ -139,9 +146,19 @@ const Room = ({ our_user }) => {
               dir={me ? "rtl" : "ltr"}
               className="flex items-start gap-x-1 mb-1"
             >
-              <p className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center">
+              <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
                 {msg.from[0].toUpperCase()}
-              </p>
+                {/* {our_user.image === "" ? (
+                  our_user.from[0].toUpperCase()
+                ) : (
+                  <Image
+                    className="rounded-full"
+                    alt="/"
+                    src={our_user.image}
+                    fill
+                  />
+                )} */}
+              </div>
               <div>
                 <div
                   className={`px-2 py-[3px] border w-fit rounded flex flex-col ${clas} `}
@@ -157,7 +174,6 @@ const Room = ({ our_user }) => {
             </div>
           );
         })}
-        <div ref={messagesEndRef} />
       </div>
       <div className="sticky w-full bottom-0 p-2 bg-gray-200 border-t">
         <form action="" className="flex gap-x-3 items-center">

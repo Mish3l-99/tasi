@@ -6,6 +6,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { HiMenuAlt1, HiX } from "react-icons/hi";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import Router, { useRouter } from "next/router";
 
 const initReg = { username: "", email: "", pass: "", pass_2: "" };
 
@@ -18,6 +19,8 @@ const Navbar = () => {
   const [nav, setNav] = useState(false);
   let [modal, setModal] = useState(false);
   let [mode, setMode] = useState();
+
+  const router = useRouter();
 
   let [regForm, setRegForm] = useState(initReg);
   let [logForm, setLogForm] = useState(initLog);
@@ -33,6 +36,10 @@ const Navbar = () => {
     closeModal();
     setLoading(false);
   }, [userData]);
+
+  function headToUserPage(ID) {
+    router.push("/" + ID);
+  }
 
   function closeModal() {
     setModal(false);
@@ -118,7 +125,10 @@ const Navbar = () => {
               >
                 <BiLogOutCircle className="scale-x-[-1]" />
               </span>
-              <div className=" border py-[2px] px-3 rounded flex items-center gap-x-2">
+              <div
+                onClick={() => headToUserPage(user.uid)}
+                className="bg-blue-100 cursor-pointer border py-[2px] px-3 rounded flex items-center gap-x-2"
+              >
                 <AiOutlineUser />
                 {userData?.username}
               </div>

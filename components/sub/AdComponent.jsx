@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 
 const client = `${process.env.NEXT_PUBLIC_ADSENSE_CLIENT}`;
-const slot = `${process.env.NEXT_PUBLIC_ADSENSE_SLOT}`;
+// const slot = `${process.env.NEXT_PUBLIC_ADSENSE_SLOT}`;
 
-const AdComponent = () => {
+const AdComponent = ({ slot }) => {
   useEffect(() => {
     (window.adsbygoogle = window.adsbygoogle || []).push({});
   }, []);
 
   return (
-    <div className="h-[300px] border flex items-center justify-center">
+    <div className="h-[120px] md:h-[300px] border flex items-center justify-center">
       <label>Advertisment</label>
       <ins
         className="adsbygoogle"

@@ -12,11 +12,12 @@ const RoomPage = () => {
     our_user = {
       user: localStorage.getItem("our_user_user"),
       from: localStorage.getItem("our_user_from"),
+      image: localStorage.getItem("our_user_image"),
     };
   } else {
     our_user =
       userData !== null
-        ? { user: user.uid, from: userData.username }
+        ? { user: user.uid, from: userData.username, image: userData.image }
         : tempUser;
   }
 

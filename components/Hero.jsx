@@ -149,7 +149,7 @@ const Hero = () => {
           </div>
           <div className="col-span-12 md:col-span-6 flex flex-col justify-center items-center">
             <p dir="rtl" className="text-tasi text-2xl md:text-5xl text-right">
-              منصة دردشة وتواصل مع متداولين في سوق الأسهم السعودي (تَداوُل).
+              منصة تصويت ودردشة مع متداولين في سوق الأسهم السعودي (تداول ).
             </p>
             {/* <hr className="mt-8 mb-4 w-full h-[2px] bg-gray-400" /> */}
             <div className="w-full">

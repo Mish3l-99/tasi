@@ -12,11 +12,10 @@ export default function Document() {
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`}
           crossOrigin="anonymous"
         />
-
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
         <link
-          href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap"
           rel="stylesheet"
         />
       </Head>

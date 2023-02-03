@@ -10,9 +10,11 @@ import {
   collection,
   doc,
   getDoc,
+  onSnapshot,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { auth, db } from "../firebase";
@@ -29,6 +31,8 @@ export const AuthContextProvider = ({ children }) => {
   const [tempUser, setTempUser] = useState(null);
 
   const [ended, setEnded] = useState(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -47,14 +51,19 @@ export const AuthContextProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  const setLocalParams = (from, user) => {
+  const setLocalParams = (from, user, image) => {
+    let img = image;
+    if (!image || image === null) {
+      img = "";
+    }
     localStorage.setItem("our_user_from", from);
     localStorage.setItem("our_user_user", user);
+    localStorage.setItem("our_user_image", img);
   };
 
   useEffect(() => {
     if (userData !== null) {
-      setLocalParams(userData.username, user.uid);
+      setLocalParams(userData.username, user.uid, userData.image);
     }
   }, [user]);
   // if(locale === "en")
@@ -70,6 +79,7 @@ export const AuthContextProvider = ({ children }) => {
         email: formData.email,
         username: formData.username,
         lastVoted: 0,
+        image,
       };
       setUserData(dataAll);
 
@@ -130,7 +140,7 @@ export const AuthContextProvider = ({ children }) => {
   const fillTempUser = (uName) => {
     var uniq = uName + "/" + new Date().getTime();
     setTempUser({ from: uName, user: uniq });
-    setLocalParams(uName, uniq);
+    setLocalParams(uName, uniq, null);
   };
 
   const logout = async () => {
@@ -138,6 +148,7 @@ export const AuthContextProvider = ({ children }) => {
     setUserData(null);
     await signOut(auth);
     toast.success("تم تسجيل الخروج بنجاح !");
+    router.push("/");
   };
 
   return (
@@ -147,6 +158,7 @@ export const AuthContextProvider = ({ children }) => {
         userData,
         ended,
         tempUser,
+        setUserData,
         fillTempUser,
         updateUserLastV,
         signup,

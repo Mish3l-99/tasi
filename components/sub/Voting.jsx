@@ -38,6 +38,8 @@ const Voting = () => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [voted, setVoted] = useState("none");
+
   const { user, userData, updateUserLastV } = useAuth();
 
   const getVoting = async () => {
@@ -83,7 +85,6 @@ const Voting = () => {
     const todayDate = getDate(timeNow);
     if (userData !== null) {
       const lastVDate = getDate(userData.lastVoted);
-
       return lastVDate !== todayDate;
     } else {
       const res = localStorage.getItem("lastVDate");
@@ -98,29 +99,41 @@ const Voting = () => {
 
   const voteUp = async () => {
     setLoading(true);
+    if (localStorage.getItem("voted") !== null) {
+      setVoted(localStorage.getItem("voted"));
+    }
+
     const todayDate = getDate(new Date().getTime());
-    if (allowedV()) {
+    if (allowedV("up")) {
       const todayDoc = await getDoc(doc(db, "voting", todayDate));
       const newVotersUp = todayDoc.data().voters_up + 1;
       const newFields = { voters_up: newVotersUp };
       await updateDoc(doc(db, "voting", todayDate), newFields);
       updateUserLastV();
+      setVoted("up");
+      localStorage.setItem("voted", "up");
     } else {
       toast.error("يتاح التصويت مرة باليوم !");
     }
+
     setShow(true);
     setLoading(false);
   };
 
   const voteDown = async () => {
     setLoading(true);
+    if (localStorage.getItem("voted") !== null) {
+      setVoted(localStorage.getItem("voted"));
+    }
     const todayDate = getDate(new Date().getTime());
-    if (allowedV()) {
+    if (allowedV("down")) {
       const todayDoc = await getDoc(doc(db, "voting", todayDate));
       const newVotersDown = todayDoc.data().voters_down + 1;
       const newFields = { voters_down: newVotersDown };
       await updateDoc(doc(db, "voting", todayDate), newFields);
       updateUserLastV();
+      setVoted("down");
+      localStorage.setItem("voted", "down");
     } else {
       toast.error("يتاح التصويت مرة باليوم !");
     }
@@ -131,7 +144,7 @@ const Voting = () => {
   // console.log(voting);
 
   return (
-    <div className="w-full flex-1 p-4 shadow-md bg-blue-200">
+    <div className="w-full flex-1 p-4 bg-blue-200">
       <div className="flex items-center justify-between text-xl mb-8">
         <div>
           <div className="flex items-center gap-x-2">
@@ -161,19 +174,25 @@ const Voting = () => {
           </div>
         </div>
         <div>
-          <a
-            href={`https://twitter.com/intent/tweet?url=https%3A%2F%2Ftasitalk.com&text=TASI%20Talk%20is%20Awesome%2C%20please%20check%20it%20out%20%3A%20`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <span
-              dir="ltr"
-              className="py-[1px] text-sm px-3 text-white rounded-full bg-[#1DA1F2] flex items-center gap-x-2 hover:shadow-md"
+          {voted !== "none" && voting && (
+            <a
+              href={`https://twitter.com/intent/tweet?url=https%3A%2F%2Ftasitalk.com&text=تصويتي%20${
+                voted === "up" ? "أخضر" : "أحمر"
+              }%20لسوق%20تاسي%20(${voting.up}%25%20أخضر%20-%20${
+                voting.down
+              }%25%20أحمر%20)`}
+              target="_blank"
+              rel="noreferrer"
             >
-              <BsTwitter />
-              Tweet
-            </span>
-          </a>
+              <span
+                // dir="ltr"
+                className="py-[2px] text-sm px-3 text-white rounded-full bg-[#1DA1F2] flex items-center gap-x-2 hover:shadow-md"
+              >
+                <BsTwitter />
+                مشاركة
+              </span>
+            </a>
+          )}
         </div>
       </div>
       <div className="">
@@ -183,13 +202,21 @@ const Voting = () => {
         <div className="flex items-center justify-between gap-x-4">
           <div
             onClick={() => voteUp()}
-            className="group rounded-full py-[2px] px-3 text-balck border-2 border-green-500 bg-gray-50 hover:bg-green-500  cursor-pointer duration-300 flex items-center gap-x-1"
+            className={
+              voted === "up" ? "group up_voted bg-green-500" : "group up_voted"
+            }
           >
-            <AiOutlineUpCircle className="text-green-500 group-hover:text-black" />
+            <AiOutlineUpCircle
+              className={
+                voted === "up"
+                  ? "text-black group-hover:text-black"
+                  : "text-green-500 group-hover:text-black"
+              }
+            />
             صوّت
           </div>
 
-          <div className="hidden md:block flex-1 w-full h-8 bg-gray-400">
+          <div className="hidden lg:block flex-1 w-full h-8 bg-gray-400">
             {show && voting && (
               <div className="w-full flex h-8 text-white text-sm bg-gray-500">
                 <div
@@ -213,13 +240,23 @@ const Voting = () => {
           </div>
           <div
             onClick={() => voteDown()}
-            className="group rounded-full py-[2px] px-3 text-balck border-2 border-red-500 bg-gray-50 hover:bg-red-500  cursor-pointer duration-300 flex items-center gap-x-1"
+            className={
+              voted === "down"
+                ? "group down_voted bg-red-500"
+                : "group down_voted"
+            }
           >
-            <AiOutlineDownCircle className="text-red-500 group-hover:text-black" />
+            <AiOutlineDownCircle
+              className={
+                voted === "down"
+                  ? "text-black group-hover:text-black"
+                  : "text-red-500 group-hover:text-black"
+              }
+            />
             صوّت
           </div>
         </div>
-        <div className="mt-2 md:hidden flex-1 w-full h-8 bg-gray-400">
+        <div className="mt-2 lg:hidden flex-1 w-full h-8 bg-gray-400">
           {show && voting && (
             <div className="w-full flex h-8 text-white text-sm bg-gray-500">
               <div
