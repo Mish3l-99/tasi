@@ -148,17 +148,17 @@ const Hero = () => {
             />
           </div>
           <div className="col-span-12 md:col-span-6 flex flex-col justify-center items-center">
-            <p dir="rtl" className="text-tasi text-2xl md:text-4xl text-right">
+            <p dir="rtl" className="text-tasi text-2xl md:text-5xl text-right">
               منصة دردشة وتواصل مع متداولين في سوق الأسهم السعودي (تَداوُل).
             </p>
-            <hr className="mt-8 mb-4 w-full h-[2px] bg-gray-400" />
+            {/* <hr className="mt-8 mb-4 w-full h-[2px] bg-gray-400" /> */}
             <div className="w-full">
-              <Particles
+              {/* <Particles
                 className="w-full h-[140px] bg-transparent shadow-md"
                 id="tsparticles"
                 init={particlesInit}
                 options={particlesConfig}
-              />
+              /> */}
             </div>
           </div>
         </div>

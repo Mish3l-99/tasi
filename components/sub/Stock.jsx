@@ -101,7 +101,7 @@ const Stock = () => {
       </div>
       {data !== null && (
         <div dir="ltr" className="w-fit">
-          As of: <span>{timeConverter(data.time - 9000000)}</span>.
+          As of: <span>{timeConverter(data.time)}</span>.
         </div>
       )}
     </div>

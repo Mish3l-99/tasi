@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { IoEnterOutline } from "react-icons/io5";
 import { BiLogIn } from "react-icons/bi";
 import { BsExclamationCircleFill } from "react-icons/bs";
+import { TiMessages } from "react-icons/ti";
 import { useRouter } from "next/router";
 import { useAuth } from "../../context/AuthContext";
 import {
@@ -87,11 +88,14 @@ const MiniRoom = () => {
 
   return (
     <>
-      <div className="flex-1 w-full p-3 shadow-lg rounded-md flex flex-col gap-y-2 bg-gray-50">
+      <div className="flex-1 w-full p-3 shadow-lg rounded-md flex flex-col gap-y-2 bg-blue-200">
         {/* first */}
         <div className="pb-2 border-b flex items-center justify-between">
           <div>
-            <p className="font-semibold text-[18px]">محادثة مباشرة</p>
+            <p className="font-semibold text-[18px] flex items-center gap-x-2">
+              <TiMessages />
+              محادثة مباشرة
+            </p>
           </div>
           <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center">
             {our_user?.from[0].toUpperCase()}
@@ -99,25 +103,36 @@ const MiniRoom = () => {
         </div>
         {/* messages box */}
         <div
-          className="h-[400px] overflow-y-auto p-2 scrollbar-hide"
+          className="h-[400px] overflow-y-auto p-2 scrollbar-hide bg-gray-50"
           id="messages-container"
         >
           {messages?.map((msg, i) => {
-            let clas = "else_mssg";
+            let me = false;
             if (our_user !== null) {
-              clas = msg.user === our_user.user ? "me_mssg" : "else_mssg";
+              let me = msg.user === our_user.user;
             }
+            let clas = me ? "bg-green-100" : "";
 
             return (
-              <div key={i} className={`mssg ${clas}`}>
+              <div
+                key={i}
+                dir={me ? "rtl" : "ltr"}
+                className="flex items-start gap-x-1 mb-1"
+              >
                 <p className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center">
                   {msg.from[0].toUpperCase()}
                 </p>
                 <div>
-                  <div>{msg.text}</div>
-                  <span>
-                    {msg.from} - {getTime(msg.createdAt - 9000000)}
-                  </span>
+                  <div
+                    className={`px-2 py-[3px] border w-fit rounded flex flex-col ${clas} `}
+                  >
+                    <div className="text-[11px] font-bold text-tasi">
+                      {msg.from}
+                    </div>
+
+                    <div>{msg.text}</div>
+                  </div>
+                  <span className="text-[12px]">{getTime(msg.createdAt)}</span>
                 </div>
               </div>
             );
@@ -187,8 +202,8 @@ const MiniRoom = () => {
                   <div className="mt-2">
                     <div className="my-3 p-2 flex items-center gap-x-2">
                       <BsExclamationCircleFill className="text-red-600" />
-                      الرجاء كتابة إسم مستخدم لتتمكن من دخول المحادثة، أو قُم
-                      بالتسجيل في الموقع.
+                      الرجاء كتابة إسم مستخدم لدخول المحادثة (كزائر) أو التسجيل
+                      بالموقع للدخول كعضو.
                     </div>
                     <form action="" className="flex flex-col gap-y-3">
                       <input

@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { AiFillDownSquare, AiFillUpSquare } from "react-icons/ai";
+import { AiOutlineDownCircle, AiOutlineUpCircle } from "react-icons/ai";
 import { BsTwitter } from "react-icons/bs";
 import { CiDiscount1 } from "react-icons/ci";
 import { MdHowToVote } from "react-icons/md";
@@ -131,7 +131,7 @@ const Voting = () => {
   // console.log(voting);
 
   return (
-    <div className="w-full flex-1 p-4 shadow-md">
+    <div className="w-full flex-1 p-4 shadow-md bg-blue-200">
       <div className="flex items-center justify-between text-xl mb-8">
         <div>
           <div className="flex items-center gap-x-2">
@@ -176,22 +176,50 @@ const Voting = () => {
           </a>
         </div>
       </div>
-      <div className="flex items-center gap-x-2">
-        <div>
-          <span
-            onClick={() => voteUp()}
-            className="text-green-500 text-xl md:text-2xl cursor-pointer hover:text-green-700"
-          >
-            <AiFillUpSquare />
-          </span>
-          <span
-            onClick={() => voteDown()}
-            className="text-red-500 text-xl md:text-2xl cursor-pointer hover:text-red-700"
-          >
-            <AiFillDownSquare />
-          </span>
+      <div className="">
+        <div className="mb-3">
+          <p>هل تعتقد السهم أخضر أم أحمر اليوم ؟</p>
         </div>
-        <div className="flex-1 h-8 bg-gray-400">
+        <div className="flex items-center justify-between gap-x-4">
+          <div
+            onClick={() => voteUp()}
+            className="group rounded-full py-[2px] px-3 text-balck border-2 border-green-500 bg-gray-50 hover:bg-green-500  cursor-pointer duration-300 flex items-center gap-x-1"
+          >
+            <AiOutlineUpCircle className="text-green-500 group-hover:text-black" />
+            صوّت
+          </div>
+
+          <div className="hidden md:block flex-1 w-full h-8 bg-gray-400">
+            {show && voting && (
+              <div className="w-full flex h-8 text-white text-sm bg-gray-500">
+                <div
+                  className="bg-green-600 h-full w-full flex items-center justify-center"
+                  style={{
+                    width: `${voting.up}%`,
+                  }}
+                >
+                  {voting.up !== 0 ? `%${voting.up}` : ""}
+                </div>
+                <div
+                  className="bg-red-600 h-full w-full flex items-center justify-center"
+                  style={{
+                    width: `${voting.down}%`,
+                  }}
+                >
+                  {voting.down !== 0 ? `%${voting.down}` : ""}
+                </div>
+              </div>
+            )}
+          </div>
+          <div
+            onClick={() => voteDown()}
+            className="group rounded-full py-[2px] px-3 text-balck border-2 border-red-500 bg-gray-50 hover:bg-red-500  cursor-pointer duration-300 flex items-center gap-x-1"
+          >
+            <AiOutlineDownCircle className="text-red-500 group-hover:text-black" />
+            صوّت
+          </div>
+        </div>
+        <div className="mt-2 md:hidden flex-1 w-full h-8 bg-gray-400">
           {show && voting && (
             <div className="w-full flex h-8 text-white text-sm bg-gray-500">
               <div

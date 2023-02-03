@@ -47,6 +47,16 @@ export const AuthContextProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  const setLocalParams = (from, user) => {
+    localStorage.setItem("our_user_from", from);
+    localStorage.setItem("our_user_user", user);
+  };
+
+  useEffect(() => {
+    if (userData !== null) {
+      setLocalParams(userData.username, user.uid);
+    }
+  }, [user]);
   // if(locale === "en")
 
   const signup = async (formData) => {
@@ -90,6 +100,7 @@ export const AuthContextProvider = ({ children }) => {
       );
       const data = await getDoc(doc(db, "users", loginRes.user.uid));
       setUserData(data.data());
+
       toast.success("تم الدخول بنجاح !");
     } catch (error) {
       console.log(error.code);
@@ -119,6 +130,7 @@ export const AuthContextProvider = ({ children }) => {
   const fillTempUser = (uName) => {
     var uniq = uName + "/" + new Date().getTime();
     setTempUser({ from: uName, user: uniq });
+    setLocalParams(uName, uniq);
   };
 
   const logout = async () => {

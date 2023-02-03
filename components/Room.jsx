@@ -23,7 +23,7 @@ function getTime(UNIX_timestamp) {
   return time;
 }
 
-const Room = () => {
+const Room = ({ our_user }) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
 
@@ -31,9 +31,18 @@ const Room = () => {
 
   const { userData, user, tempUser } = useAuth();
 
-  const our_user = userData
-    ? { user: user.uid, from: userData.username }
-    : tempUser;
+  // let our_user = userData
+  //   ? { user: user.uid, from: userData.username }
+  //   : tempUser;
+  // if (our_user !== null) {
+  //   localStorage.setItem("our_user_user", our_user.user);
+  //   localStorage.setItem("our_user_from", our_user.from);
+  // }
+  // console.log({
+  //   user: localStorage.getItem("our_user_user"),
+  //   from: localStorage.getItem("our_user_from"),
+  // });
+  // const [ourUser, setOurUser] = useState(our_user);
 
   const filterMessage = (mssg) => {
     // filter for bad words here
@@ -88,15 +97,27 @@ const Room = () => {
     scrollToBottom();
   }, [messages]);
 
-  if (our_user === null) {
-    router.replace("/");
-    return;
-  }
+  // useEffect(() => {
+  //   return (
+  //     !ourUser &&
+  //     setOurUser({
+  //       user: localStorage.getItem("our_user_user"),
+  //       from: localStorage.getItem("our_user_from"),
+  //     })
+  //   );
+  // }, []);
+
+  // if (our_user === null) {
+  //   router.replace("/");
+  //   return;
+  // }
+
+  console.log(our_user);
 
   return (
-    <div dir="rtl" className="h-screen w-full flex flex-col">
+    <div dir="rtl" className="h-screen w-full flex flex-col overflow-auto">
       {/* first */}
-      <div className="pb-2 border-b flex items-center justify-between bg-gray-200 p-3">
+      <div className="sticky w-full top-0 pb-2 border-b flex items-center justify-between bg-gray-200 p-3">
         <div>
           <p className="font-semibold text-[18px] text-tasi">
             محادثة مباشرة - TASI
@@ -109,25 +130,36 @@ const Room = () => {
       {/* messages box */}
       <div className="flex-1 overflow-y-auto p-2 scrollbar-hide">
         {messages?.map((msg, i) => {
-          let clas = msg.user === our_user.user ? "me_mssg" : "else_mssg";
+          let me = msg.user === our_user.user;
+          let clas = me ? "bg-green-100" : "";
 
           return (
-            <div key={i} className={`mssg ${clas}`}>
+            <div
+              key={i}
+              dir={me ? "rtl" : "ltr"}
+              className="flex items-start gap-x-1 mb-1"
+            >
               <p className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center">
                 {msg.from[0].toUpperCase()}
               </p>
               <div>
-                <div>{msg.text}</div>
-                <span>
-                  {msg.from} - {getTime(msg.createdAt - 9000000)}
-                </span>
+                <div
+                  className={`px-2 py-[3px] border w-fit rounded flex flex-col ${clas} `}
+                >
+                  <div className="text-[11px] font-bold text-tasi">
+                    {msg.from}
+                  </div>
+
+                  <div>{msg.text}</div>
+                </div>
+                <span className="text-[12px]">{getTime(msg.createdAt)}</span>
               </div>
             </div>
           );
         })}
         <div ref={messagesEndRef} />
       </div>
-      <div className="p-2 bg-gray-200 border-t">
+      <div className="sticky w-full bottom-0 p-2 bg-gray-200 border-t">
         <form action="" className="flex gap-x-3 items-center">
           <input
             value={message}

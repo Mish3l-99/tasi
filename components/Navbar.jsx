@@ -100,14 +100,14 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full py-2 bg-slate-50 shadow-sm shadow-gray-200">
+    <div className="w-full py-2 bg-blue-200 shadow-sm shadow-gray-200">
       <div className="container">
         <nav className="flex flex-row-reverse justify-between items-center">
           <Image
             src="/logo/logo.png"
             alt="/"
-            height={40}
-            width={120}
+            height={80}
+            width={150}
             className="object-cover z-[999]"
           />
           {userData !== null ? (
