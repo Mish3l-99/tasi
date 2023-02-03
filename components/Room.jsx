@@ -134,7 +134,7 @@ const Room = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="sticky flex-1 overflow-y-auto p-2 scrollbar-hide"
+        className="sticky right-0 left-0 w-full flex-1 overflow-y-auto p-2 scrollbar-hide"
       >
         {messages?.map((msg, i) => {
           let me = msg.user === our_user.user;
@@ -181,7 +181,7 @@ const Room = ({ our_user }) => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             type="text"
-            className="flex-1 border px-2 py-1 outline-none"
+            className="flex-1 w-full border px-2 py-1 outline-none"
             placeholder="الرسالة..."
           />
           <button
@@ -189,7 +189,7 @@ const Room = ({ our_user }) => {
             className="flex items-center gap-x-2 border-2 px-3 py-1 text-white bg-tasi"
           >
             <span className="hidden md:block">أرسل</span>
-            <AiOutlineSend size={21} className="scale-x-[-1]" />
+            <AiOutlineSend size={18} className="scale-x-[-1]" />
           </button>
         </form>
       </div>
