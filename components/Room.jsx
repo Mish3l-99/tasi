@@ -59,8 +59,9 @@ const Room = ({ our_user }) => {
     }
   };
 
-  const sendMessage = async () => {
-    // e.preventDefault();
+  const sendMessage = async (e) => {
+    e.preventDefault(e);
+    messageBoxRef.current?.focus();
     const readyMessage = filterMessage(message);
     setMessage("");
     if (readyMessage !== "") {
@@ -92,6 +93,7 @@ const Room = ({ our_user }) => {
     []
   );
   const messagesEndRef = useRef(null);
+  const messageBoxRef = useRef(null);
   // const scrollToBottom = () => {
   //   const objDiv = document.getElementById("messages-container");
   //   objDiv.scrollTop = objDiv.scrollHeight;
@@ -210,22 +212,24 @@ const Room = ({ our_user }) => {
         <div ref={messagesEndRef} />
       </div>
       <div className="fixed h-[50px] md:h-fit md:sticky w-full bottom-0 p-2 border-t bg-blue-200 z-[99]">
-        <div className="flex gap-x-3 items-center">
+        <form action="" className="flex gap-x-3 items-center">
           <input
+            id="input_area"
+            ref={messageBoxRef}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             type="text"
-            className="flex-1 w-full border px-2 py-1 outline-none"
+            className="flex-1 w-full border px-2 py-1 outline-none "
             placeholder="الرسالة..."
           />
           <button
-            onClick={() => sendMessage()}
+            onClick={(e) => sendMessage(e)}
             className="flex items-center gap-x-2 border-2 px-3 py-1 text-white bg-tasi"
           >
             <span className="hidden md:block">أرسل</span>
             <AiOutlineSend size={18} className="scale-x-[-1]" />
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );
