@@ -26,7 +26,7 @@ const Navbar = () => {
   let [logForm, setLogForm] = useState(initLog);
   let [loading, setLoading] = useState(false);
 
-  const { user, userData, signup, login, logout, ended } = useAuth();
+  const { user, userData, signup, login, logout, ended, resetPass } = useAuth();
 
   useEffect(() => {
     setLoading(false);
@@ -66,7 +66,6 @@ const Navbar = () => {
   }
 
   const loginUser = (e) => {
-    e.preventDefault();
     setLoading(true);
     if (logForm.email === "" || logForm.pass === "") {
       toast.error("حقول فارغة !");
@@ -299,7 +298,7 @@ const Navbar = () => {
                     )}
                   </div>
 
-                  <div className="mt-4 pt-2 border-t flex justify-center">
+                  <div className="mt-4 pt-2 border-t flex justify-center gap-x-4 items-center">
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-green-200 text-green-900 px-4 py-[2px] text-sm hover:bg-tasi hover:text-white duration-500 flex items-center gap-x-1"
@@ -310,6 +309,7 @@ const Navbar = () => {
                       }
                     >
                       {mode === "register" ? "التسجيل" : "الدخول"}
+
                       {!loading ? (
                         <BiLogIn className="scale-x-[-1]" />
                       ) : (
@@ -321,6 +321,14 @@ const Navbar = () => {
                         />
                       )}
                     </button>
+                    {mode === "login" && (
+                      <button
+                        onClick={() => resetPass(logForm.email)}
+                        className="text-sm bg-white border px-2 p-[2px]"
+                      >
+                        استعادة كلمة المرور
+                      </button>
+                    )}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

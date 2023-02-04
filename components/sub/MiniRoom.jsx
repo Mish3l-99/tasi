@@ -126,7 +126,7 @@ const MiniRoom = () => {
             return (
               <div
                 key={i}
-                dir={me ? "rtl" : "ltr"}
+                // dir={me ? "rtl" : "ltr"}
                 className="flex items-start gap-x-1 mb-1"
               >
                 <p className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">

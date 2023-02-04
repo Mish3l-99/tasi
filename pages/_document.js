@@ -12,12 +12,20 @@ export default function Document() {
           content="ZuAIZGdSfbT0W_NzkLkIGcyk4XWIngE-7TRxXj0cSpw"
         />
 
+        {/* meta description */}
+        <meta
+          name="description"
+          content="موقع تاسي توك يوفر منصة محادثة ودردشة حية ومباشرة لتبادل المعلومات والآراء بين المتداولين والمضاربين في سوق الأسهم السعودي (تداول)."
+        />
+
         {/* Google Adsense */}
         <scrip
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`}
           crossOrigin="anonymous"
         />
+
+        {/* font tags */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
         <link

@@ -25,7 +25,6 @@ const RoomPage = () => {
     <>
       <Head>
         <title>TASI Talk Room</title>
-        <meta name="description" content="" />
         <link rel="icon" href="/logo/talk-favi.png" />
       </Head>
       <main>

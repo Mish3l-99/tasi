@@ -7,11 +7,13 @@ import {
   query,
 } from "firebase/firestore";
 import Image from "next/image";
+import Link from "next/link";
 import Router, { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import { AiOutlineSend } from "react-icons/ai";
+import { IoEnterOutline } from "react-icons/io5";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 
@@ -31,6 +33,8 @@ const Room = ({ our_user }) => {
   const router = useRouter();
 
   const { userData, user, tempUser } = useAuth();
+
+  const windowSize = useRef(window.innerWidth);
 
   // let our_user = userData
   //   ? { user: user.uid, from: userData.username }
@@ -112,38 +116,65 @@ const Room = ({ our_user }) => {
   //   return;
   // }
 
-  console.log(our_user);
+  // console.log(our_user);
+
+  if (!windowSize) {
+    return <p>loading...</p>;
+  }
 
   return (
     <div dir="rtl" className="h-screen w-full flex flex-col overflow-auto">
       {/* first */}
-      <div className="sticky w-full top-0 pb-2 border-b flex items-center justify-between bg-gray-200 p-3">
+      <div className="absolute h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 border-b flex items-center justify-between bg-blue-200 p-3">
         <div>
-          <p className="font-semibold text-[18px] text-tasi">
+          <p className="font-semibold text-[16px] md:text-[20px]">
             محادثة مباشرة - TASI
           </p>
         </div>
-        <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
-          {!our_user.image ? (
-            our_user.from[0].toUpperCase()
-          ) : (
-            <Image className="rounded-full" alt="/" src={our_user.image} fill />
-          )}
+        <div className="flex items-center gap-x-2">
+          <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
+            {!our_user.image ? (
+              our_user.from[0].toUpperCase()
+            ) : (
+              <Image
+                className="rounded-full"
+                alt="/"
+                src={our_user.image}
+                fill
+              />
+            )}
+          </div>
+          <div>
+            <Link href="/">
+              <div className="flex items-center gap-x-1 py-[1px] px-1 md:px-2 bg-gray-50 rounded">
+                <span className="hidden md:block">الخروج</span>
+                <IoEnterOutline className="scale-x-[-1]" />
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
       {/* messages box */}
       <div
         id="messages-container"
-        className="sticky right-0 left-0 w-full flex-1 overflow-y-auto p-2 scrollbar-hide"
+        className="py-[50px] sticky right-0 left-0 w-full flex-1 overflow-y-auto p-2 scrollbar-hide bg-blue-100"
       >
         {messages?.map((msg, i) => {
           let me = msg.user === our_user.user;
-          let clas = me ? "bg-green-100" : "";
+          let clas = me ? "bg-green-100" : "bg-blue-50";
+
+          let mobile = false;
+          if (windowSize.current < 550) {
+            mobile = true;
+          }
 
           return (
             <div
               key={i}
-              dir={me ? "rtl" : "ltr"}
+              style={
+                mobile ? (me ? { direction: "rtl" } : { direction: "ltr" }) : {}
+              }
+              // dir={me ? "rtl" : "ltr"}
               className="flex items-start gap-x-1 mb-1"
             >
               <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
@@ -174,7 +205,7 @@ const Room = ({ our_user }) => {
           );
         })}
       </div>
-      <div className="sticky w-full bottom-0 p-2 bg-gray-200 border-t">
+      <div className="absolute h-[50px] md:h-fit md:sticky w-full bottom-0 p-2 border-t bg-blue-200 z-[99]">
         <form action="" className="flex gap-x-3 items-center">
           <input
             value={message}

@@ -1,17 +1,14 @@
-<div className="flex flex-col gap-y-2">
-  <div className="flex flex-col md:flex-row items-start gap-4">
-    {/* price area */}
-    <Stock />
-    {/* voting area */}
-    <Voting />
-  </div>
-  {/* second area */}
-  <div className="mt-6 flex flex-col md:flex-row items-start gap-4">
-    {/* ads area */}
-    <div className="flex flex-col gap-6  w-full md:w-[250px]">
-      <AdComponent />
-    </div>
-    {/* chat room area */}
-    <MiniRoom />
-  </div>
+<div dir="rtl">
+  <p>مرحباً,</p>
+  <p>يمكنك استخدام الرابط أدناه لإنشاء كلمة سر جديدة :</p>
+  <p>
+    <a href="%LINK%">%LINK%</a>
+  </p>
+  <p>في حال لم تطلب ذلك، رجاءً تجاهل الرسالة.</p>
+  <p>و شكراً</p>
+
+  <img
+    src="https://firebasestorage.googleapis.com/v0/b/tasi-64b35.appspot.com/o/images%2Flogo.png?alt=media&token=7a663a31-2251-46e5-92ab-33c7608bc856"
+    height="70"
+  />
 </div>;

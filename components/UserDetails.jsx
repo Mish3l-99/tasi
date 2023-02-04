@@ -134,12 +134,15 @@ const UserDetails = () => {
               </button>
             </form>
           </div>
-          <div className="mt-4">
+          <div className="mt-4 flex gap-x-8 items-center ">
             <Link href="/room">
               <button className="bg-tasi px-2 py-[2px] text-white rounded flex items-center gap-x-2 hover:bg-green-900 duration-500">
                 الدخول للمحادثة
                 <IoEnterOutline className="scale-x-[-1]" />
               </button>
+            </Link>
+            <Link href="/">
+              <span className="underline hover:text-tasi">العودة</span>
             </Link>
           </div>
         </div>

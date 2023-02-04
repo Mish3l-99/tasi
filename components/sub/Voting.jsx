@@ -197,7 +197,7 @@ const Voting = () => {
       </div>
       <div className="">
         <div className="mb-3">
-          <p>هل تعتقد السهم أخضر أم أحمر اليوم ؟</p>
+          <p>هل تعتقد المُؤشِّر اليوم أخضر أم أحمر ؟</p>
         </div>
         <div className="flex items-center justify-between gap-x-4">
           <div

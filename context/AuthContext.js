@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   sendSignInLinkToEmail,
   signInWithEmailAndPassword,
   signOut,
@@ -79,7 +80,7 @@ export const AuthContextProvider = ({ children }) => {
         email: formData.email,
         username: formData.username,
         lastVoted: 0,
-        image,
+        image: null,
       };
       setUserData(dataAll);
 
@@ -137,6 +138,41 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const resetPass = async (email) => {
+    if (email !== "") {
+      const toastId = toast.loading("الرجاء الإنتظار....");
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          toast.success("تم إرسال بريد الكتروني لإستعادة كلمة المرور.", {
+            id: toastId,
+          });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          if (errorCode === "auth/invalid-email") {
+            toast.error("ايميل خاطئ", {
+              id: toastId,
+            });
+          } else if (errorCode === "auth/user-not-found") {
+            toast.error("ايميل غير موجود، قم بالتسجيل !", {
+              id: toastId,
+            });
+          } else {
+            toast.error("خطأ !", {
+              id: toastId,
+            });
+          }
+
+          console.log(errorMessage);
+          // ..
+        });
+    } else {
+      toast.error("حقل الايميل فارغ !");
+    }
+  };
+
   const fillTempUser = (uName) => {
     var uniq = uName + "/" + new Date().getTime();
     setTempUser({ from: uName, user: uniq });
@@ -148,6 +184,7 @@ export const AuthContextProvider = ({ children }) => {
     setUserData(null);
     await signOut(auth);
     toast.success("تم تسجيل الخروج بنجاح !");
+    return;
     router.push("/");
   };
 
@@ -158,6 +195,7 @@ export const AuthContextProvider = ({ children }) => {
         userData,
         ended,
         tempUser,
+        resetPass,
         setUserData,
         fillTempUser,
         updateUserLastV,
