@@ -59,8 +59,8 @@ const Room = ({ our_user }) => {
     }
   };
 
-  const sendMessage = async (e) => {
-    e.preventDefault();
+  const sendMessage = async () => {
+    // e.preventDefault();
     const readyMessage = filterMessage(message);
     setMessage("");
     if (readyMessage !== "") {
@@ -210,7 +210,7 @@ const Room = ({ our_user }) => {
         <div ref={messagesEndRef} />
       </div>
       <div className="fixed h-[50px] md:h-fit md:sticky w-full bottom-0 p-2 border-t bg-blue-200 z-[99]">
-        <form action="" className="flex gap-x-3 items-center">
+        <div className="flex gap-x-3 items-center">
           <input
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -219,13 +219,13 @@ const Room = ({ our_user }) => {
             placeholder="الرسالة..."
           />
           <button
-            onClick={(e) => sendMessage(e)}
+            onClick={() => sendMessage()}
             className="flex items-center gap-x-2 border-2 px-3 py-1 text-white bg-tasi"
           >
             <span className="hidden md:block">أرسل</span>
             <AiOutlineSend size={18} className="scale-x-[-1]" />
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );
