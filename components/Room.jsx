@@ -128,7 +128,10 @@ const Room = ({ our_user }) => {
   }
 
   return (
-    <div dir="rtl" className="h-screen w-full flex flex-col overflow-auto">
+    <div
+      dir="rtl"
+      className="h-screen w-full flex flex-col overflow-auto relative"
+    >
       {/* first */}
       <div className="fixed h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 border-b flex items-center justify-between bg-blue-200 p-3">
         <div>
