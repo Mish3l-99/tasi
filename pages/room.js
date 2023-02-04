@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
 import Room from "../components/Room";
+import RoomLayout from "../components/sub/RoomLayout";
 import { useAuth } from "../context/AuthContext";
 
 const RoomPage = () => {
@@ -39,7 +40,13 @@ const RoomPage = () => {
         <link rel="icon" href="/logo/talk-favi.png" />
       </Head>
       <main className=" bg-blue-100">
-        <Room our_user={our_user} />
+        {window.innerWidth > 500 ? (
+          <RoomLayout>
+            <Room our_user={our_user} />
+          </RoomLayout>
+        ) : (
+          <Room our_user={our_user} />
+        )}
       </main>
     </>
   );

@@ -9,7 +9,7 @@ const AdComponent = ({ slot }) => {
   }, []);
 
   return (
-    <div className="h-[120px] md:h-[300px] border flex items-center justify-center">
+    <div className="h-[120px] md:h-[200px] border border-gray-400 flex items-center justify-center">
       <label>Advertisment</label>
       <ins
         className="adsbygoogle"
