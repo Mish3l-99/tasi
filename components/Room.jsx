@@ -61,17 +61,18 @@ const Room = ({ our_user }) => {
 
   const sendMessage = async (e) => {
     e.preventDefault(e);
-    messageBoxRef.current?.focus();
-    const readyMessage = filterMessage(message);
-    setMessage("");
-    if (readyMessage !== "") {
-      const createdAt = new Date().getTime();
-      await addDoc(collection(db, "messages"), {
-        ...our_user,
-        text: readyMessage,
-        createdAt,
-      });
-    }
+    // messageBoxRef.current?.focus();
+    console.log(messageBoxRef.current);
+    // const readyMessage = filterMessage(message);
+    // setMessage("");
+    // if (readyMessage !== "") {
+    //   const createdAt = new Date().getTime();
+    //   await addDoc(collection(db, "messages"), {
+    //     ...our_user,
+    //     text: readyMessage,
+    //     createdAt,
+    //   });
+    // }
   };
 
   useEffect(
@@ -165,7 +166,7 @@ const Room = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="my-[55px] right-0 left-0 w-full flex-1 overflow-y-auto p-2 scrollbar-hide bg-blue-100"
+        className="my-[55px] md:my-0 right-0 left-0 w-full flex-1 overflow-y-auto px-2 scrollbar-hide bg-blue-100"
       >
         {messages?.map((msg, i) => {
           let me = msg.user === our_user.user;

@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React from "react";
+import React, { useEffect } from "react";
 import Room from "../components/Room";
 import { useAuth } from "../context/AuthContext";
 
@@ -21,10 +21,21 @@ const RoomPage = () => {
         : tempUser;
   }
 
+  // useEffect(() => {
+  //   // window.addEventListener("resize", () => {
+  //   //   console.log(window.innerHeight, window.innerWidth);
+  //   // });
+  //   console.log(window.innerHeight);
+  // }, []);
+
   return (
     <>
       <Head>
         <title>TASI Talk Room</title>
+        <meta
+          name="viewport"
+          content={`width=device-width,height=${window.innerHeight}, initial-scale=1.0`}
+        ></meta>
         <link rel="icon" href="/logo/talk-favi.png" />
       </Head>
       <main className=" bg-blue-100">
