@@ -62,17 +62,16 @@ const Room = ({ our_user }) => {
   const sendMessage = async (e) => {
     e.preventDefault(e);
     // messageBoxRef.current?.focus();
-    console.log(messageBoxRef.current);
-    // const readyMessage = filterMessage(message);
-    // setMessage("");
-    // if (readyMessage !== "") {
-    //   const createdAt = new Date().getTime();
-    //   await addDoc(collection(db, "messages"), {
-    //     ...our_user,
-    //     text: readyMessage,
-    //     createdAt,
-    //   });
-    // }
+    const readyMessage = filterMessage(message);
+    setMessage("");
+    if (readyMessage !== "") {
+      const createdAt = new Date().getTime();
+      await addDoc(collection(db, "messages"), {
+        ...our_user,
+        text: readyMessage,
+        createdAt,
+      });
+    }
   };
 
   useEffect(
