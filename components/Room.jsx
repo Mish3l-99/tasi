@@ -103,7 +103,9 @@ const Room = ({ our_user }) => {
   };
 
   useEffect(() => {
-    scrollToBottom();
+    setTimeout(() => {
+      scrollToBottom();
+    }, 100);
   }, [messages]);
 
   // useEffect(() => {
