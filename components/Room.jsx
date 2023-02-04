@@ -125,7 +125,7 @@ const Room = ({ our_user }) => {
   return (
     <div dir="rtl" className="h-screen w-full flex flex-col overflow-auto">
       {/* first */}
-      <div className="absolute h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 border-b flex items-center justify-between bg-blue-200 p-3">
+      <div className="fixed h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 border-b flex items-center justify-between bg-blue-200 p-3">
         <div>
           <p className="font-semibold text-[16px] md:text-[20px]">
             محادثة مباشرة - TASI
@@ -157,7 +157,7 @@ const Room = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="py-[50px] sticky right-0 left-0 w-full flex-1 overflow-y-auto p-2 scrollbar-hide bg-blue-100"
+        className="py-[55px] sticky right-0 left-0 w-full flex-1 overflow-y-auto p-2 scrollbar-hide bg-blue-100"
       >
         {messages?.map((msg, i) => {
           let me = msg.user === our_user.user;
@@ -205,7 +205,7 @@ const Room = ({ our_user }) => {
           );
         })}
       </div>
-      <div className="absolute h-[50px] md:h-fit md:sticky w-full bottom-0 p-2 border-t bg-blue-200 z-[99]">
+      <div className="fixed h-[50px] md:h-fit md:sticky w-full bottom-0 p-2 border-t bg-blue-200 z-[99]">
         <form action="" className="flex gap-x-3 items-center">
           <input
             value={message}
