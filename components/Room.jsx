@@ -141,13 +141,13 @@ const Room = ({ our_user }) => {
       className="h-screen w-full flex flex-col overflow-auto relative"
     >
       {/* first */}
-      <div className="fixed h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 border-b flex items-center justify-between bg-blue-200 p-3">
-        <div>
+      <div className="fixed h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 border-b flex items-center justify-between py-0 md:py-2 bg-blue-200">
+        <div className="px-3 my-auto h-fit">
           <p className="font-semibold text-[16px] md:text-[20px]">
             محادثة مباشرة - TASI
           </p>
         </div>
-        <div className="flex items-center gap-x-2">
+        <div className="flex items-center gap-x-2 px-3 my-auto h-fit">
           <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
             {!our_user.image ? (
               our_user.from[0].toUpperCase()
