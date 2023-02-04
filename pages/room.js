@@ -25,10 +25,7 @@ const RoomPage = () => {
     <>
       <Head>
         <title>TASI Talk Room</title>
-        <meta
-          name="description"
-          content="This is the number one platform in talking about stocks and trading in Saudi"
-        />
+        <meta name="description" content="" />
         <link rel="icon" href="/logo/talk-favi.png" />
       </Head>
       <main>

@@ -6,6 +6,12 @@ export default function Document() {
   return (
     <Html>
       <Head>
+        {/* google search engine */}
+        <meta
+          name="google-site-verification"
+          content="ZuAIZGdSfbT0W_NzkLkIGcyk4XWIngE-7TRxXj0cSpw"
+        />
+
         {/* Google Adsense */}
         <scrip
           async

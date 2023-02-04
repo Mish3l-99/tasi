@@ -14,6 +14,7 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import Image from "next/image";
 
 function getTime(UNIX_timestamp) {
   var a = new Date(UNIX_timestamp);
@@ -55,7 +56,7 @@ const MiniRoom = () => {
   const { userData, user, tempUser, fillTempUser } = useAuth();
 
   const our_user = userData
-    ? { user: user.uid, from: userData.username }
+    ? { user: user.uid, from: userData.username, image: userData.image }
     : tempUser;
 
   useEffect(
@@ -98,7 +99,16 @@ const MiniRoom = () => {
             </p>
           </div>
           <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center">
-            {our_user?.from[0].toUpperCase()}
+            {!our_user?.image ? (
+              our_user?.from[0].toUpperCase()
+            ) : (
+              <Image
+                className="rounded-full"
+                alt="/"
+                src={our_user?.image}
+                fill
+              />
+            )}
           </div>
         </div>
         {/* messages box */}
@@ -119,8 +129,17 @@ const MiniRoom = () => {
                 dir={me ? "rtl" : "ltr"}
                 className="flex items-start gap-x-1 mb-1"
               >
-                <p className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center">
-                  {msg.from[0].toUpperCase()}
+                <p className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
+                  {!msg.image ? (
+                    msg.from[0].toUpperCase()
+                  ) : (
+                    <Image
+                      className="rounded-full"
+                      alt="/"
+                      src={msg.image}
+                      fill
+                    />
+                  )}
                 </p>
                 <div>
                   <div

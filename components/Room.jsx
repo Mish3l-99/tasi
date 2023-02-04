@@ -147,17 +147,16 @@ const Room = ({ our_user }) => {
               className="flex items-start gap-x-1 mb-1"
             >
               <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
-                {msg.from[0].toUpperCase()}
-                {/* {our_user.image === "" ? (
-                  our_user.from[0].toUpperCase()
+                {!msg.image ? (
+                  msg.from[0].toUpperCase()
                 ) : (
                   <Image
                     className="rounded-full"
                     alt="/"
-                    src={our_user.image}
+                    src={msg.image}
                     fill
                   />
-                )} */}
+                )}
               </div>
               <div>
                 <div
