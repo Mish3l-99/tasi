@@ -157,7 +157,7 @@ const Room = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="py-[55px] sticky right-0 left-0 w-full flex-1 overflow-y-auto p-2 scrollbar-hide bg-blue-100"
+        className="my-[55px] right-0 left-0 w-full flex-1 overflow-y-auto p-2 scrollbar-hide bg-blue-100"
       >
         {messages?.map((msg, i) => {
           let me = msg.user === our_user.user;
