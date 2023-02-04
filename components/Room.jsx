@@ -29,6 +29,7 @@ function getTime(UNIX_timestamp) {
 const Room = ({ our_user }) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [snapshotCount, setSnapshotCount] = useState(0);
 
   const router = useRouter();
 
@@ -88,24 +89,29 @@ const Room = ({ our_user }) => {
             id: doc.id,
           }));
           setMessages(data.reverse());
+          setSnapshotCount((snapshotCount) => snapshotCount + 1);
         }
       ),
     []
   );
   const messagesEndRef = useRef(null);
   const messageBoxRef = useRef(null);
-  // const scrollToBottom = () => {
-  //   const objDiv = document.getElementById("messages-container");
-  //   objDiv.scrollTop = objDiv.scrollHeight;
-  // };
   const scrollToBottom = () => {
+    const objDiv = document.getElementById("messages-container");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  };
+  const scrollBottomSmooth = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    setTimeout(() => {
+    if (snapshotCount > 1) {
+      setTimeout(() => {
+        scrollBottomSmooth();
+      }, 50);
+    } else {
       scrollToBottom();
-    }, 100);
+    }
   }, [messages]);
 
   // useEffect(() => {

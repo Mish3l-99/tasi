@@ -6,9 +6,9 @@ body {
   direction: rtl;
   font-family: "Noto Naskh Arabic", serif;
 }
-html {
+/* html {
   scroll-behavior: smooth;
-}
+} */
 
 @layer base {
   body {
