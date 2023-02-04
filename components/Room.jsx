@@ -91,10 +91,13 @@ const Room = ({ our_user }) => {
       ),
     []
   );
-
+  const messagesEndRef = useRef(null);
+  // const scrollToBottom = () => {
+  //   const objDiv = document.getElementById("messages-container");
+  //   objDiv.scrollTop = objDiv.scrollHeight;
+  // };
   const scrollToBottom = () => {
-    const objDiv = document.getElementById("messages-container");
-    objDiv.scrollTop = objDiv.scrollHeight;
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -204,6 +207,7 @@ const Room = ({ our_user }) => {
             </div>
           );
         })}
+        <div ref={messagesEndRef} />
       </div>
       <div className="fixed h-[50px] md:h-fit md:sticky w-full bottom-0 p-2 border-t bg-blue-200 z-[99]">
         <form action="" className="flex gap-x-3 items-center">

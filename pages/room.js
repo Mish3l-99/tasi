@@ -27,7 +27,7 @@ const RoomPage = () => {
         <title>TASI Talk Room</title>
         <link rel="icon" href="/logo/talk-favi.png" />
       </Head>
-      <main className="overflow-auto bg-blue-100">
+      <main className=" bg-blue-100">
         <Room our_user={our_user} />
       </main>
     </>
