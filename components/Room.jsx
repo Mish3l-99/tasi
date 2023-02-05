@@ -97,8 +97,9 @@ const Room = ({ our_user }) => {
   const messagesEndRef = useRef(null);
   const messageBoxRef = useRef(null);
   const scrollToBottom = () => {
-    const objDiv = document.getElementById("messages-container");
-    objDiv.scrollTop = objDiv.scrollHeight;
+    // const objDiv = document.getElementById("messages-container");
+    // objDiv.scrollTop = objDiv.scrollHeight;
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
   };
   const scrollBottomSmooth = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -110,6 +111,7 @@ const Room = ({ our_user }) => {
         scrollBottomSmooth();
       }, 50);
     } else {
+      // first time
       scrollToBottom();
     }
   }, [messages]);
