@@ -209,7 +209,11 @@ const Room = ({ our_user }) => {
         </div>
       </div>
       <div className="fixed h-[50px] md:h-fit md:sticky w-full bottom-0 left-0 right-0 p-2 border-t bg-blue-200 z-[99]">
-        <form action="" className="flex gap-x-3 items-center">
+        <form
+          action=""
+          autocomplete="off"
+          className="flex gap-x-3 items-center"
+        >
           <input
             id="input_area"
             ref={messageBoxRef}
@@ -220,6 +224,7 @@ const Room = ({ our_user }) => {
             placeholder="الرسالة..."
             aria-autocomplete="both"
             aria-haspopup="false"
+            autocomplete="off"
           />
           <button
             onClick={(e) => sendMessage(e)}
