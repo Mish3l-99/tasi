@@ -18,6 +18,12 @@ export default function Document() {
           content="موقع تاسي توك يوفر منصة محادثة ودردشة حية ومباشرة لتبادل المعلومات والآراء بين المتداولين والمضاربين في سوق الأسهم السعودي (تداول)."
         />
 
+        {/* meta keywords */}
+        <meta
+          name="description"
+          content="tasitalk, TASI, tadawul, TASI Talk, Stock market chat, saudi stock,saudi chat"
+        />
+
         {/* Google Adsense */}
         <scrip
           async
