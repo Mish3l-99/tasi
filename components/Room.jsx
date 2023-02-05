@@ -214,13 +214,12 @@ const Room = ({ our_user }) => {
           autocomplete="off"
           className="flex gap-x-3 items-center"
         >
-          <input type="password" className="hidden" />
           <input
             id="input_area"
             ref={messageBoxRef}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            // type="search"
+            type="search"
             className="flex-1 w-full border px-2 py-1 outline-none "
             placeholder="الرسالة..."
             aria-autocomplete="both"
