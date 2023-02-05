@@ -176,7 +176,10 @@ const Navbar = () => {
             >
               <BiLogOutCircle className="scale-x-[-1]" />
             </span>
-            <div className=" border py-[2px] px-3 rounded flex items-center gap-x-2">
+            <div
+              onClick={() => headToUserPage(user.uid)}
+              className=" border py-[2px] px-3 rounded flex items-center gap-x-2"
+            >
               <AiOutlineUser />
               {userData?.username}
             </div>

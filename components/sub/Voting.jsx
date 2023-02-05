@@ -60,17 +60,23 @@ const Voting = () => {
       });
       // setVoting({ up: 50, down: 50, total: 0 });
     }
+
+    // get actual user vote
+    if (localStorage.getItem("voted") !== null) {
+      setVoted(localStorage.getItem("voted"));
+      setShow(true);
+    }
   };
 
   useEffect(() => {
     setVoting();
     setShow(false);
-    // localStorage.clear();
+    localStorage.clear();
   }, [userData]);
 
   useEffect(() => {
     getVoting();
-  }, [show]);
+  }, [show, userData]);
 
   // const firstV = () => {
   //   const timeNow = new Date().getTime();
@@ -80,12 +86,37 @@ const Voting = () => {
   //   });
   // };
 
+  const openInNewTab = (url) => {
+    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = null;
+  };
+
+  const handleTweet = () => {
+    if (voted !== "none" && voting) {
+      const url = `https://twitter.com/intent/tweet?url=https%3A%2F%2Ftasitalk.com&text=تصويتي%20${
+        voted === "up" ? "أخضر" : "أحمر"
+      }%20لسوق%20تاسي%20(${voting.up}%25%20أخضر%20-%20${
+        voting.down
+      }%25%20أحمر%20)`;
+
+      openInNewTab(url);
+    } else {
+      toast.error("قم بالتصويت أولا !");
+    }
+  };
+
   const allowedV = () => {
     const timeNow = new Date().getTime();
     const todayDate = getDate(timeNow);
     if (userData !== null) {
-      const lastVDate = getDate(userData.lastVoted);
-      return lastVDate !== todayDate;
+      const res = localStorage.getItem("lastVDate");
+      if (res === null || res !== todayDate) {
+        const lastVDate = getDate(userData.lastVoted);
+        localStorage.setItem("lastVDate", todayDate);
+        return lastVDate !== todayDate;
+      } else {
+        return false;
+      }
     } else {
       const res = localStorage.getItem("lastVDate");
       if (res === null || res !== todayDate) {
@@ -174,25 +205,13 @@ const Voting = () => {
           </div>
         </div>
         <div>
-          {voted !== "none" && voting && (
-            <a
-              href={`https://twitter.com/intent/tweet?url=https%3A%2F%2Ftasitalk.com&text=تصويتي%20${
-                voted === "up" ? "أخضر" : "أحمر"
-              }%20لسوق%20تاسي%20(${voting.up}%25%20أخضر%20-%20${
-                voting.down
-              }%25%20أحمر%20)`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span
-                // dir="ltr"
-                className="py-[2px] text-sm px-3 text-white rounded-full bg-[#1DA1F2] flex items-center gap-x-2 hover:shadow-md"
-              >
-                <BsTwitter />
-                مشاركة
-              </span>
-            </a>
-          )}
+          <button
+            onClick={() => handleTweet()}
+            className="py-[2px] text-sm px-3 text-white rounded-full bg-[#1DA1F2] flex items-center gap-x-2 hover:shadow-md"
+          >
+            <BsTwitter />
+            مشاركة
+          </button>
         </div>
       </div>
       <div className="">

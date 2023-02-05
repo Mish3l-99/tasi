@@ -35,7 +35,7 @@ const Room = ({ our_user }) => {
 
   const { userData, user, tempUser } = useAuth();
 
-  const windowSize = useRef(window.innerWidth);
+  // const windowSize = useRef(window.innerWidth);
 
   // let our_user = userData
   //   ? { user: user.uid, from: userData.username }
@@ -131,17 +131,13 @@ const Room = ({ our_user }) => {
 
   // console.log(our_user);
 
-  if (!windowSize) {
-    return <p>loading...</p>;
-  }
-
   return (
     <div
       dir="rtl"
-      className="h-screen w-full flex flex-col overflow-auto relative"
+      className="h-screen w-full flex flex-col overflow-auto relative md:bg-blue-200"
     >
       {/* first */}
-      <div className="fixed h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 border-b flex items-center justify-between py-0 md:py-2 bg-blue-200">
+      <div className="fixed h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 flex items-center justify-between py-0 md:py-2 bg-blue-200">
         <div className="px-3 my-auto h-fit">
           <p className="font-semibold text-[16px] md:text-[20px]">
             محادثة مباشرة - TASI
@@ -173,56 +169,46 @@ const Room = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="my-[55px] md:my-0 right-0 left-0 w-full flex-1 overflow-y-auto px-2 pt-[3px] scrollbar-hide bg-blue-100"
+        className="my-[55px] md:my-0 right-0 left-0 w-full flex-1 overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
       >
-        {messages?.map((msg, i) => {
-          let me = msg.user === our_user.user;
-          let clas = me ? "bg-green-100" : "bg-blue-50";
+        <div className="px-2 bg-white pt-1 rounded">
+          {messages?.map((msg, i) => {
+            let me = msg.user === our_user.user;
+            let clas = me ? "bg-green-100" : "bg-blue-50";
 
-          let mobile = false;
-          if (windowSize.current < 550) {
-            mobile = true;
-          }
-
-          return (
-            <div
-              key={i}
-              style={
-                mobile ? (me ? { direction: "rtl" } : { direction: "ltr" }) : {}
-              }
-              // dir={me ? "rtl" : "ltr"}
-              className="flex items-start gap-x-1 mb-1"
-            >
-              <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
-                {!msg.image ? (
-                  msg.from[0].toUpperCase()
-                ) : (
-                  <Image
-                    className="rounded-full"
-                    alt="/"
-                    src={msg.image}
-                    fill
-                  />
-                )}
-              </div>
-              <div>
-                <div
-                  className={`px-2 py-[3px] border w-fit rounded flex flex-col ${clas} `}
-                >
-                  <div className="text-[11px] font-bold text-tasi">
-                    {msg.from}
-                  </div>
-
-                  <div>{msg.text}</div>
+            return (
+              <div key={i} dir="" className="flex items-start gap-x-1 mb-1">
+                <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
+                  {!msg.image ? (
+                    msg.from[0].toUpperCase()
+                  ) : (
+                    <Image
+                      className="rounded-full"
+                      alt="/"
+                      src={msg.image}
+                      fill
+                    />
+                  )}
                 </div>
-                <span className="text-[12px]">{getTime(msg.createdAt)}</span>
+                <div>
+                  <div
+                    className={`px-2 py-[3px] border w-fit rounded flex flex-col ${clas} `}
+                  >
+                    <div className="text-[11px] font-bold text-tasi">
+                      {msg.from}
+                    </div>
+
+                    <div>{msg.text}</div>
+                  </div>
+                  <span className="text-[12px]">{getTime(msg.createdAt)}</span>
+                </div>
               </div>
-            </div>
-          );
-        })}
-        <div ref={messagesEndRef} />
+            );
+          })}
+          <div ref={messagesEndRef} />
+        </div>
       </div>
-      <div className="fixed h-[50px] md:h-fit md:sticky w-full bottom-0 p-2 border-t bg-blue-200 z-[99]">
+      <div className="fixed h-[50px] md:h-fit md:sticky w-full bottom-0 left-0 right-0 p-2 border-t bg-blue-200 z-[99]">
         <form action="" className="flex gap-x-3 items-center">
           <input
             id="input_area"

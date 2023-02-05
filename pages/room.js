@@ -35,11 +35,11 @@ const RoomPage = () => {
         <title>TASI Talk Room</title>
         <meta
           name="viewport"
-          content={`width=device-width,height=${window.innerHeight}, initial-scale=1.0`}
+          content={`width=device-width,height=${window.innerHeight}, initial-scale=1.0,user-scalable=no`}
         ></meta>
         <link rel="icon" href="/logo/talk-favi.png" />
       </Head>
-      <main className=" bg-blue-100">
+      <main className=" ">
         {window.innerWidth > 500 ? (
           <RoomLayout>
             <Room our_user={our_user} />
