@@ -169,7 +169,7 @@ const Room = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="my-[55px] md:my-0 right-0 left-0 w-full flex-1 overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
+        className="absolute md:sticky md:my-0 top-[55px] bottom-[55px] right-0 left-0 w-full flex-1 overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
       >
         <div className="px-2 bg-white pt-1 rounded">
           {messages?.map((msg, i) => {
