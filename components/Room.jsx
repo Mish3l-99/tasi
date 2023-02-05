@@ -214,6 +214,7 @@ const Room = ({ our_user }) => {
           autocomplete="off"
           className="flex gap-x-3 items-center"
         >
+          <input type="password" className="hidden" />
           <input
             id="input_area"
             ref={messageBoxRef}
