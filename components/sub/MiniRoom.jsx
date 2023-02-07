@@ -31,9 +31,16 @@ const MiniRoom = () => {
   const [messages, setMessages] = useState([]);
 
   const router = useRouter();
+  const { user, fillLocalUser } = useAuth();
+
+  const localUser = {
+    user: localStorage.getItem("our_user_user"),
+    from: localStorage.getItem("our_user_from"),
+    image: localStorage.getItem("our_user_image"),
+  };
 
   const enterRoom = () => {
-    if (userData) {
+    if (user !== null) {
       router.push("/room");
     } else {
       openModal();
@@ -41,7 +48,7 @@ const MiniRoom = () => {
   };
 
   const getToRoom = () => {
-    fillTempUser(userField);
+    fillLocalUser(userField);
     router.push("/room");
   };
 
@@ -53,11 +60,10 @@ const MiniRoom = () => {
     setModal(true);
   }
 
-  const { userData, user, tempUser, fillTempUser } = useAuth();
-
-  const our_user = userData
-    ? { user: user.uid, from: userData.username, image: userData.image }
-    : tempUser;
+  const our_user =
+    user !== null
+      ? { user: user.uid, from: user.username, image: user.image }
+      : localUser;
 
   useEffect(
     () =>
@@ -77,6 +83,8 @@ const MiniRoom = () => {
       ),
     []
   );
+
+  console.log(our_user);
 
   const scrollToBottom = () => {
     const objDiv = document.getElementById("messages-container");
@@ -98,9 +106,11 @@ const MiniRoom = () => {
               محادثة مباشرة
             </p>
           </div>
-          <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center">
-            {!our_user?.image ? (
-              our_user?.from[0].toUpperCase()
+          <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
+            {our_user.from === null ? (
+              ""
+            ) : our_user.image === "" || our_user.image === null ? (
+              our_user.from[0].toUpperCase()
             ) : (
               <Image
                 className="rounded-full"
@@ -119,9 +129,10 @@ const MiniRoom = () => {
           {messages?.map((msg, i) => {
             let me = false;
             if (our_user !== null) {
-              let me = msg.user === our_user.user;
+              me = msg.user === our_user.user;
             }
             let clas = me ? "bg-green-100" : "";
+            let BGclas = me ? "bg-green-600" : "bg-slate-700";
 
             return (
               <div
@@ -129,7 +140,9 @@ const MiniRoom = () => {
                 // dir={me ? "rtl" : "ltr"}
                 className="flex items-start gap-x-1 mb-1"
               >
-                <p className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
+                <p
+                  className={`w-8 h-8 p-2 rounded-full text-white flex items-center justify-center ${BGclas} relative`}
+                >
                   {!msg.image ? (
                     msg.from[0].toUpperCase()
                   ) : (

@@ -9,7 +9,7 @@ import { useAuth } from "../context/AuthContext";
 import { db, storage } from "../firebase";
 
 const UserDetails = () => {
-  const { userData, user, setUserData } = useAuth();
+  const { user, updateUserPhoto } = useAuth();
 
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState();
@@ -75,11 +75,7 @@ const UserDetails = () => {
   useEffect(
     () =>
       onSnapshot(doc(db, "users", user.uid), (snapshot) => {
-        setUserData((userData) => ({
-          ...userData,
-          image: "/icons/loading.gif",
-        }));
-        setUserData(snapshot.data());
+        updateUserPhoto(snapshot.data());
       }),
     []
   );
@@ -90,24 +86,22 @@ const UserDetails = () => {
         <div className="flex flex-col gap-y-4">
           <div className="flex gap-x-4 md:gap-x-8 items-start">
             <div className="w-24 h-24 md:w-36 md:h-36 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
-              {userData.image ? (
+              {user.image ? (
                 <Image
                   className="rounded-full"
                   alt="/"
-                  src={userData?.image}
+                  src={user?.image}
                   fill
                 />
               ) : (
                 <div className="p-6 text-lg">
-                  {userData.username[0].toUpperCase()}
+                  {user.username[0].toUpperCase()}
                 </div>
               )}
             </div>
             <div>
-              <p className="text-xl md:text-2xl font-bold">
-                {userData.username}
-              </p>
-              <p className="text-lg md:text-xl">{userData.email}</p>
+              <p className="text-xl md:text-2xl font-bold">{user.username}</p>
+              <p className="text-lg md:text-xl">{user.email}</p>
             </div>
           </div>
           <div className="pt-4 border-t">

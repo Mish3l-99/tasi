@@ -11,9 +11,12 @@ import {
   collection,
   doc,
   getDoc,
+  getDocs,
   onSnapshot,
+  query,
   setDoc,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -26,10 +29,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const [tempUser, setTempUser] = useState(null);
 
   const [ended, setEnded] = useState(true);
 
@@ -38,13 +38,18 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser({
-          uid: user.uid,
-          email: user.email,
+        getDoc(doc(db, "users", user.uid)).then((res) => {
+          if (res.exists()) {
+            setUser({
+              uid: user.uid,
+              // email: user.email,
+              ...res.data(),
+            });
+            // localStorage.clear();
+          }
         });
       } else {
         setUser(null);
-        setUserData(null);
       }
       setLoading(false);
     });
@@ -62,11 +67,6 @@ export const AuthContextProvider = ({ children }) => {
     localStorage.setItem("our_user_image", img);
   };
 
-  useEffect(() => {
-    if (userData !== null) {
-      setLocalParams(userData.username, user.uid, userData.image);
-    }
-  }, [user]);
   // if(locale === "en")
 
   const signup = async (formData) => {
@@ -82,11 +82,12 @@ export const AuthContextProvider = ({ children }) => {
         lastVoted: 0,
         image: null,
       };
-      setUserData(dataAll);
-
       await setDoc(doc(db, "users", userRes.user.uid), dataAll).then((res) => {
         toast.success("تم التسجيل بنجاح !");
       });
+
+      // sign in a new to get actual data
+      signInWithEmailAndPassword(auth, formData.email, formData.pass);
     } catch (error) {
       console.log(error);
       if (error.code === "auth/invalid-email") {
@@ -109,8 +110,6 @@ export const AuthContextProvider = ({ children }) => {
         loginForm.email,
         loginForm.pass
       );
-      const data = await getDoc(doc(db, "users", loginRes.user.uid));
-      setUserData(data.data());
 
       toast.success("تم الدخول بنجاح !");
     } catch (error) {
@@ -130,11 +129,15 @@ export const AuthContextProvider = ({ children }) => {
     // return signInWithEmailAndPassword(auth, email, password);
   };
 
+  const updateUserPhoto = async (newUser) => {
+    setUser((user) => ({ ...user, ...newUser }));
+  };
+
   const updateUserLastV = async () => {
-    if (userData) {
+    if (user) {
       const timeNow = new Date().getTime();
       await updateDoc(doc(db, "users", user.uid), { lastVoted: timeNow });
-      setUserData((userData) => ({ ...userData, lastVoted: timeNow }));
+      setUser((user) => ({ ...user, lastVoted: timeNow }));
     }
   };
 
@@ -173,15 +176,13 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const fillTempUser = (uName) => {
+  const fillLocalUser = (uName) => {
     var uniq = uName + "/" + new Date().getTime();
-    setTempUser({ from: uName, user: uniq });
     setLocalParams(uName, uniq, null);
   };
 
   const logout = async () => {
     setUser(null);
-    setUserData(null);
     await signOut(auth);
     toast.success("تم تسجيل الخروج بنجاح !");
     return;
@@ -192,13 +193,11 @@ export const AuthContextProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        userData,
         ended,
-        tempUser,
         resetPass,
-        setUserData,
-        fillTempUser,
+        fillLocalUser,
         updateUserLastV,
+        updateUserPhoto,
         signup,
         login,
         logout,

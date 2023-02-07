@@ -8,6 +8,16 @@ import { toast } from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 import Router, { useRouter } from "next/router";
 
+const setLocalParams = (from, user, image) => {
+  let img = image;
+  if (!image || image === null) {
+    img = "";
+  }
+  localStorage.setItem("our_user_from", from);
+  localStorage.setItem("our_user_user", user);
+  localStorage.setItem("our_user_image", img);
+};
+
 const initReg = { username: "", email: "", pass: "", pass_2: "" };
 
 const initLog = {
@@ -26,7 +36,7 @@ const Navbar = () => {
   let [logForm, setLogForm] = useState(initLog);
   let [loading, setLoading] = useState(false);
 
-  const { user, userData, signup, login, logout, ended, resetPass } = useAuth();
+  const { user, signup, login, logout, ended, resetPass } = useAuth();
 
   useEffect(() => {
     setLoading(false);
@@ -35,7 +45,7 @@ const Navbar = () => {
   useEffect(() => {
     closeModal();
     setLoading(false);
-  }, [userData]);
+  }, [user]);
 
   function headToUserPage(ID) {
     router.push("/" + ID);
@@ -105,6 +115,12 @@ const Navbar = () => {
     }
   };
 
+  // to be triggered when loging in
+  useEffect(() => {
+    // setLocalParams(user?.username, user?.uid, user?.image);
+    console.log(user);
+  }, [user]);
+
   return (
     <div className="w-full py-2 bg-blue-200 shadow-sm shadow-gray-200">
       <div className="container">
@@ -116,7 +132,7 @@ const Navbar = () => {
             width={150}
             className="object-cover z-[999]"
           />
-          {userData !== null ? (
+          {user !== null ? (
             <div className="hidden md:flex items-center gap-x-4">
               <span
                 onClick={() => logout()}
@@ -129,7 +145,7 @@ const Navbar = () => {
                 className="bg-blue-100 cursor-pointer border py-[2px] px-3 rounded flex items-center gap-x-2"
               >
                 <AiOutlineUser />
-                {userData?.username}
+                {user?.username}
               </div>
             </div>
           ) : (
@@ -168,7 +184,7 @@ const Navbar = () => {
             : "shadow-lg fixed top-0 left-0 h-full w-[85%] bg-white transition-all flex flex-col ease-out duration-500 px-2 pt-16 md:hidden opacity-0 pointer-events-none ml-[-100%]"
         }
       >
-        {userData !== null ? (
+        {user !== null ? (
           <div className="flex items-center justify-center gap-x-4">
             <span
               onClick={() => logout()}
@@ -181,7 +197,7 @@ const Navbar = () => {
               className=" border py-[2px] px-3 rounded flex items-center gap-x-2"
             >
               <AiOutlineUser />
-              {userData?.username}
+              {user?.username}
             </div>
           </div>
         ) : (

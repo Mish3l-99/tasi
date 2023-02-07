@@ -4,23 +4,29 @@ import Room from "../components/Room";
 import RoomLayout from "../components/sub/RoomLayout";
 import { useAuth } from "../context/AuthContext";
 
+import { isIOS, isSafari, isChrome } from "react-device-detect";
+import RoomIPhone from "../components/sub/RoomIPhone";
+
+// console.log();
+
 const RoomPage = () => {
-  const { userData, user, tempUser } = useAuth();
+  const { user } = useAuth();
+
+  const localUser = {
+    user: localStorage.getItem("our_user_user"),
+    from: localStorage.getItem("our_user_from"),
+    image: localStorage.getItem("our_user_image"),
+  };
 
   let our_user;
 
-  if (userData === null && tempUser === null) {
-    our_user = {
-      user: localStorage.getItem("our_user_user"),
-      from: localStorage.getItem("our_user_from"),
-      image: localStorage.getItem("our_user_image"),
-    };
+  if (user === null) {
+    our_user = localUser;
   } else {
-    our_user =
-      userData !== null
-        ? { user: user.uid, from: userData.username, image: userData.image }
-        : tempUser;
+    our_user = { user: user.uid, from: user.username, image: user.image };
   }
+
+  console.log(our_user);
 
   // useEffect(() => {
   //   // window.addEventListener("resize", () => {
@@ -44,6 +50,8 @@ const RoomPage = () => {
           <RoomLayout>
             <Room our_user={our_user} />
           </RoomLayout>
+        ) : isIOS ? (
+          <RoomIPhone our_user={our_user} />
         ) : (
           <Room our_user={our_user} />
         )}
@@ -53,23 +61,3 @@ const RoomPage = () => {
 };
 
 export default RoomPage;
-
-// export async function getServerSideProps(context) {
-//   // const { userData, user, tempUser } = useAuth();
-//   console.log(context);
-
-//   // let our_user = userData
-//   //   ? { user: user.uid, from: userData.username }
-//   //   : tempUser;
-
-//   // if (our_user === null) {
-//   //   our_user = {
-//   //     user: localStorage.getItem("our_user_user"),
-//   //     from: localStorage.getItem("our_user_from"),
-//   //   };
-//   // }
-
-//   return {
-//     props: {}, // will be passed to the page component as props
-//   };
-// }

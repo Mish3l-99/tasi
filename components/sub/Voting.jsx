@@ -40,7 +40,7 @@ const Voting = () => {
 
   const [voted, setVoted] = useState("none");
 
-  const { user, userData, updateUserLastV } = useAuth();
+  const { user, updateUserLastV } = useAuth();
 
   const getVoting = async () => {
     const todayDate = getDate(new Date().getTime());
@@ -71,12 +71,12 @@ const Voting = () => {
   useEffect(() => {
     setVoting();
     setShow(false);
-    localStorage.clear();
-  }, [userData]);
+    // localStorage.clear();
+  }, [user]);
 
   useEffect(() => {
     getVoting();
-  }, [show, userData]);
+  }, [show, user]);
 
   // const firstV = () => {
   //   const timeNow = new Date().getTime();
@@ -108,15 +108,17 @@ const Voting = () => {
   const allowedV = () => {
     const timeNow = new Date().getTime();
     const todayDate = getDate(timeNow);
-    if (userData !== null) {
-      const res = localStorage.getItem("lastVDate");
-      if (res === null || res !== todayDate) {
-        const lastVDate = getDate(userData.lastVoted);
-        localStorage.setItem("lastVDate", todayDate);
-        return lastVDate !== todayDate;
-      } else {
-        return false;
-      }
+    if (user !== null) {
+      // const res = localStorage.getItem("lastVDate");
+      // if (res === null || res !== todayDate) {
+
+      // } else {
+      //   return false;
+      // }
+
+      const lastVDate = getDate(user.lastVoted);
+      return !(lastVDate === todayDate);
+      // localStorage.setItem("lastVDate", todayDate);
     } else {
       const res = localStorage.getItem("lastVDate");
       if (res === null || res !== todayDate) {
@@ -135,7 +137,7 @@ const Voting = () => {
     }
 
     const todayDate = getDate(new Date().getTime());
-    if (allowedV("up")) {
+    if (allowedV()) {
       const todayDoc = await getDoc(doc(db, "voting", todayDate));
       const newVotersUp = todayDoc.data().voters_up + 1;
       const newFields = { voters_up: newVotersUp };
@@ -157,7 +159,7 @@ const Voting = () => {
       setVoted(localStorage.getItem("voted"));
     }
     const todayDate = getDate(new Date().getTime());
-    if (allowedV("down")) {
+    if (allowedV()) {
       const todayDoc = await getDoc(doc(db, "voting", todayDate));
       const newVotersDown = todayDoc.data().voters_down + 1;
       const newFields = { voters_down: newVotersDown };

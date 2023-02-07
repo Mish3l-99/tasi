@@ -10,10 +10,7 @@ const UserPage = () => {
     <div>
       <Head>
         <title>TASI Talk</title>
-        <meta
-          name="description"
-          content="موقع تاسي توك يوفر منصة محادثة ودردشة حية ومباشرة لتبادل المعلومات والآراء بين المتداولين و المضاربين في سوق الأسهم السعودي (تداوُل) ونوفر أيضا نظام تصويت لأداء المؤشر يوميا مع إمكانية نشر التصويت على تويتر. Tasitalk is a platform for traders and investors in the Saudi Stock market (Tadawul) to chat, vote and exchange information in relation to the market. Traders also can vote for the performance of the market"
-        />
+
         <link rel="icon" href="/logo/favi.png" />
       </Head>
       <main>

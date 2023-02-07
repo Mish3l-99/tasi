@@ -33,7 +33,7 @@ const Room = ({ our_user }) => {
 
   const router = useRouter();
 
-  const { userData, user, tempUser } = useAuth();
+  // const { user } = useAuth();
 
   // const windowSize = useRef(window.innerWidth);
 
@@ -96,11 +96,13 @@ const Room = ({ our_user }) => {
   );
   const messagesEndRef = useRef(null);
   const messageBoxRef = useRef(null);
+
   const scrollToBottom = () => {
     // const objDiv = document.getElementById("messages-container");
     // objDiv.scrollTop = objDiv.scrollHeight;
     messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
   };
+
   const scrollBottomSmooth = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -115,6 +117,12 @@ const Room = ({ our_user }) => {
       scrollToBottom();
     }
   }, [messages]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     ;
+  //   };
+  // }, []);
 
   // useEffect(() => {
   //   return (
@@ -147,13 +155,15 @@ const Room = ({ our_user }) => {
         </div>
         <div className="flex items-center gap-x-2 px-3 my-auto h-fit">
           <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
-            {!our_user.image ? (
+            {our_user.from === null ? (
+              ""
+            ) : our_user.image === "" || our_user.image === null ? (
               our_user.from[0].toUpperCase()
             ) : (
               <Image
                 className="rounded-full"
                 alt="/"
-                src={our_user.image}
+                src={our_user?.image}
                 fill
               />
             )}
@@ -177,10 +187,13 @@ const Room = ({ our_user }) => {
           {messages?.map((msg, i) => {
             let me = msg.user === our_user.user;
             let clas = me ? "bg-green-100" : "bg-blue-50";
+            let BGclas = me ? "bg-green-600" : "bg-slate-700";
 
             return (
               <div key={i} dir="" className="flex items-start gap-x-1 mb-1">
-                <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
+                <div
+                  className={`w-8 h-8 p-2 rounded-full ${BGclas} text-white flex items-center justify-center relative`}
+                >
                   {!msg.image ? (
                     msg.from[0].toUpperCase()
                   ) : (
