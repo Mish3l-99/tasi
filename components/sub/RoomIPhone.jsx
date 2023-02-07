@@ -144,7 +144,7 @@ const RoomIPhone = ({ our_user }) => {
   return (
     <div dir="rtl" className="h-screen w-full flex flex-col md:bg-blue-200">
       {/* first */}
-      <div className="sticky pb-2 w-full top-0 z-[99] flex items-center justify-between py-2 md:py-2 bg-blue-200">
+      <div className=" pb-2 w-full top-0 z-[99] flex items-center justify-between py-2 md:py-2 bg-blue-200">
         <div className="px-3 my-auto h-fit">
           <p className="font-semibold text-[16px] md:text-[20px]">
             محادثة مباشرة - TASI
