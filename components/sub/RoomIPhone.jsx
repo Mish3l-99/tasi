@@ -144,7 +144,7 @@ const RoomIPhone = ({ our_user }) => {
   return (
     <div dir="rtl" className="h-screen w-full flex flex-col md:bg-blue-200">
       {/* first */}
-      <div className="absolute top-0 right-0 left-0 z-[99] pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
+      {/* <div className=" pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
         <div className="px-3 my-auto h-fit">
           <p className="font-semibold text-[16px] md:text-[20px]">
             محادثة مباشرة - TASI
@@ -174,7 +174,7 @@ const RoomIPhone = ({ our_user }) => {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* messages box */}
       <div
         id="messages-container"
@@ -246,6 +246,37 @@ const RoomIPhone = ({ our_user }) => {
             <AiOutlineSend size={18} className="scale-x-[-1]" />
           </button>
         </form>
+        <div className=" pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
+          <div className="px-3 my-auto h-fit">
+            <p className="font-semibold text-[16px] md:text-[20px]">
+              محادثة مباشرة - TASI
+            </p>
+          </div>
+          <div className="flex items-center gap-x-2 px-3 my-auto h-fit">
+            <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
+              {our_user.from === null ? (
+                ""
+              ) : our_user.image === "" || our_user.image === null ? (
+                our_user.from[0]?.toUpperCase()
+              ) : (
+                <Image
+                  className="rounded-full"
+                  alt="/"
+                  src={our_user?.image}
+                  fill
+                />
+              )}
+            </div>
+            <div>
+              <Link href="/">
+                <div className="flex items-center gap-x-1 py-[1px] px-1 md:px-2 bg-gray-50 rounded">
+                  <span className="hidden md:block">الخروج</span>
+                  <IoEnterOutline className="scale-x-[-1]" />
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
