@@ -114,11 +114,15 @@ const RoomIPhone = ({ our_user }) => {
     disableBodyScroll(targetDiv);
   };
 
-  // useEffect(() => {
-  //   // stopScrolling();
-  //   const body = document.querySelector("body");
-  //   body.style.overflow = "hidden";
-  // }, []);
+  useEffect(() => {
+    // stopScrolling();
+    const body = document.querySelector("body");
+    body.style.overflow = "hidden";
+
+    return () => {
+      body.style.overflow = "auto";
+    };
+  }, []);
 
   const scrollBottomSmooth = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
