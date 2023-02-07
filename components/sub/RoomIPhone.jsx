@@ -193,7 +193,7 @@ const RoomIPhone = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="flex-1 w-full overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
+        className="flex-1 sticky bottom-0 right-0 left-0 w-full overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
       >
         <div className="px-2 bg-white pt-1 rounded">
           {messages?.map((msg, i) => {
