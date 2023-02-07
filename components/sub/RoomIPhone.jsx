@@ -220,7 +220,7 @@ const RoomIPhone = ({ our_user }) => {
           <div ref={messagesEndRef} />
         </div>
       </div>
-      <div className="w-full p-2 border-t bg-blue-200 z-[99]">
+      <div className="sticky w-full p-2 border-t bg-blue-200 z-[99]">
         <form
           action=""
           autocomplete="off"
