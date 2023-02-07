@@ -114,9 +114,11 @@ const RoomIPhone = ({ our_user }) => {
     disableBodyScroll(targetDiv);
   };
 
-  useEffect(() => {
-    stopScrolling();
-  }, []);
+  // useEffect(() => {
+  //   // stopScrolling();
+  //   const body = document.querySelector("body");
+  //   body.style.overflow = "hidden";
+  // }, []);
 
   const scrollBottomSmooth = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -159,7 +161,7 @@ const RoomIPhone = ({ our_user }) => {
   return (
     <div dir="rtl" className="h-screen w-full flex flex-col md:bg-blue-200">
       {/* first */}
-      <div className="sticky right-0 left-0 top-0 pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
+      <div className="sticky right-0 left-0 top-0 z-[99] pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
         <div className="px-3 my-auto h-fit">
           <p className="font-semibold text-[16px] md:text-[20px]">
             محادثة مباشرة - TASI
@@ -193,7 +195,7 @@ const RoomIPhone = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="flex-1 sticky bottom-0 right-0 left-0 w-full overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
+        className="flex-1 w-full overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
       >
         <div className="px-2 bg-white pt-1 rounded">
           {messages?.map((msg, i) => {
