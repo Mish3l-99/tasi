@@ -110,7 +110,7 @@ const MiniRoom = () => {
             {our_user.from === null ? (
               ""
             ) : our_user.image === "" || our_user.image === null ? (
-              our_user.from[0].toUpperCase()
+              our_user.from[0]?.toUpperCase()
             ) : (
               <Image
                 className="rounded-full"
@@ -144,7 +144,7 @@ const MiniRoom = () => {
                   className={`w-8 h-8 p-2 rounded-full text-white flex items-center justify-center ${BGclas} relative`}
                 >
                   {!msg.image ? (
-                    msg.from[0].toUpperCase()
+                    msg.from[0]?.toUpperCase()
                   ) : (
                     <Image
                       className="rounded-full"
