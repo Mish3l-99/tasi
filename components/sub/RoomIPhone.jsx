@@ -142,7 +142,10 @@ const RoomIPhone = ({ our_user }) => {
   // console.log(our_user);
 
   return (
-    <div dir="rtl" className="h-screen w-full flex flex-col md:bg-blue-200">
+    <div
+      dir="rtl"
+      className="h-screen w-full flex flex-col md:bg-blue-200 overflow-hidden"
+    >
       {/* first */}
       <div className="sticky pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
         <div className="px-3 my-auto h-fit">
@@ -232,7 +235,7 @@ const RoomIPhone = ({ our_user }) => {
             ref={messageBoxRef}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            type="search"
+            type="text"
             className="flex-1 w-full border px-2 py-1 outline-none "
             placeholder="الرسالة..."
             aria-autocomplete="both"
