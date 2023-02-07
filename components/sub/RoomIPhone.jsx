@@ -17,6 +17,12 @@ import { IoEnterOutline } from "react-icons/io5";
 import { useAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
 
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks,
+} from "body-scroll-lock";
+
 function getTime(UNIX_timestamp) {
   var a = new Date(UNIX_timestamp);
 
@@ -103,6 +109,15 @@ const RoomIPhone = ({ our_user }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
   };
 
+  const stopScrolling = () => {
+    const targetDiv = document.getElementById("messages-container");
+    disableBodyScroll(targetDiv);
+  };
+
+  useEffect(() => {
+    stopScrolling();
+  }, []);
+
   const scrollBottomSmooth = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -134,10 +149,10 @@ const RoomIPhone = ({ our_user }) => {
   //   );
   // }, []);
 
-  // if (our_user === null) {
-  //   router.replace("/");
-  //   return;
-  // }
+  if (our_user.from === null) {
+    router.replace("/");
+    return;
+  }
 
   // console.log(our_user);
 

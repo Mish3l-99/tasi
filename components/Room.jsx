@@ -134,10 +134,10 @@ const Room = ({ our_user }) => {
   //   );
   // }, []);
 
-  // if (our_user === null) {
-  //   router.replace("/");
-  //   return;
-  // }
+  if (our_user.from === null) {
+    router.replace("/");
+    return;
+  }
 
   // console.log(our_user);
 
@@ -158,7 +158,7 @@ const Room = ({ our_user }) => {
             {our_user.from === null ? (
               ""
             ) : our_user.image === "" || our_user.image === null ? (
-              our_user.from[0]?.toUpperCase()
+              our_user?.from[0]?.toUpperCase()
             ) : (
               <Image
                 className="rounded-full"
@@ -195,7 +195,7 @@ const Room = ({ our_user }) => {
                   className={`w-8 h-8 p-2 rounded-full ${BGclas} text-white flex items-center justify-center relative`}
                 >
                   {!msg.image ? (
-                    msg.from[0]?.toUpperCase()
+                    msg?.from[0]?.toUpperCase()
                   ) : (
                     <Image
                       className="rounded-full"
