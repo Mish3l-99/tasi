@@ -115,22 +115,7 @@ const RoomIPhone = ({ our_user }) => {
   };
 
   useEffect(() => {
-    // stopScrolling();
-    let scrollPosition = 0;
-    const body = document.querySelector("body");
-    scrollPosition = window.pageYOffset;
-    body.style.overflow = "hidden";
-    body.style.position = "fixed";
-    body.style.top = `-${scrollPosition}px`;
-    body.style.width = "100%";
-
-    return () => {
-      body.style.removeProperty("overflow");
-      body.style.removeProperty("position");
-      body.style.removeProperty("top");
-      body.style.removeProperty("width");
-      window.scrollTo(0, scrollPosition);
-    };
+    stopScrolling();
   }, []);
 
   const scrollBottomSmooth = () => {
@@ -172,7 +157,7 @@ const RoomIPhone = ({ our_user }) => {
   // console.log(our_user);
 
   return (
-    <div dir="rtl" className="h-screen w-full flex flex-col md:bg-blue-200">
+    <div dir="rtl" className="h-screen w-screen flex flex-col md:bg-blue-200">
       {/* first */}
       <div className="sticky right-0 left-0 top-0 z-[99] pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
         <div className="px-3 my-auto h-fit">
