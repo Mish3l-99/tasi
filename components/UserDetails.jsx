@@ -95,7 +95,7 @@ const UserDetails = () => {
                 />
               ) : (
                 <div className="p-6 text-lg">
-                  {user.username[0].toUpperCase()}
+                  {user?.username[0]?.toUpperCase()}
                 </div>
               )}
             </div>

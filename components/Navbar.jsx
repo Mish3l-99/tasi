@@ -2,7 +2,11 @@ import Image from "next/image";
 import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { BiLogIn, BiLogOutCircle, BiUserPlus } from "react-icons/bi";
-import { AiOutlineUser } from "react-icons/ai";
+import {
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { HiMenuAlt1, HiX } from "react-icons/hi";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
@@ -29,6 +33,8 @@ const Navbar = () => {
   const [nav, setNav] = useState(false);
   let [modal, setModal] = useState(false);
   let [mode, setMode] = useState();
+
+  let [passVisible, setPassVisible] = useState(false);
 
   const router = useRouter();
 
@@ -170,8 +176,21 @@ const Navbar = () => {
             </div>
           )}
           {/* mob nav */}
-          <div className="md:hidden" onClick={() => setNav(!nav)}>
-            {nav ? <HiX /> : <HiMenuAlt1 />}
+          <div className="md:hidden flex gap-x-2 items-center">
+            <div onClick={() => setNav(!nav)}>
+              {nav ? <HiX /> : <HiMenuAlt1 />}
+            </div>
+            {user !== null && (
+              <div className="flex items-center justify-center gap-x-2 text-sm bg-blue-100">
+                <div
+                  onClick={() => headToUserPage(user.uid)}
+                  className=" border py-[2px] px-3 rounded flex items-center gap-x-2"
+                >
+                  <AiOutlineUser />
+                  {user?.username}
+                </div>
+              </div>
+            )}
           </div>
         </nav>
       </div>
@@ -279,13 +298,28 @@ const Navbar = () => {
                             className="outline-none py-[2px] px-2 border"
                             placeholder="البريد الإلكتروني..."
                           />
-                          <input
-                            onChange={(e) => updateReg(e)}
-                            name="pass"
-                            type="password"
-                            className="outline-none py-[2px] px-2 border"
-                            placeholder="كلمة المرور..."
-                          />
+                          <div className="relative">
+                            <input
+                              onChange={(e) => updateReg(e)}
+                              name="pass"
+                              type={passVisible ? "text" : "password"}
+                              className="outline-none py-[2px] px-2 border"
+                              placeholder="كلمة المرور..."
+                            />
+                            <div className="absolute left-3 top-0 h-full">
+                              {/* <AiOutlineEye /> */}
+                              <div
+                                onClick={() => setPassVisible(!passVisible)}
+                                className="flex items-center justify-center h-full"
+                              >
+                                {passVisible ? (
+                                  <AiOutlineEyeInvisible />
+                                ) : (
+                                  <AiOutlineEye />
+                                )}
+                              </div>
+                            </div>
+                          </div>
                           <input
                             onChange={(e) => updateReg(e)}
                             name="pass_2"
@@ -305,13 +339,28 @@ const Navbar = () => {
                             className="outline-none py-[2px] px-2 border"
                             placeholder="البريد الإلكتروني..."
                           />
-                          <input
-                            onChange={(e) => updateLog(e)}
-                            name="pass"
-                            type="password"
-                            className="outline-none py-[2px] px-2 border"
-                            placeholder="كلمة المرور..."
-                          />
+                          <div className="relative">
+                            <input
+                              onChange={(e) => updateLog(e)}
+                              name="pass"
+                              type={passVisible ? "text" : "password"}
+                              className="outline-none py-[2px] px-2 border"
+                              placeholder="كلمة المرور..."
+                            />
+                            <div className="absolute left-3 top-0 h-full">
+                              {/* <AiOutlineEye /> */}
+                              <div
+                                onClick={() => setPassVisible(!passVisible)}
+                                className="flex items-center justify-center h-full"
+                              >
+                                {passVisible ? (
+                                  <AiOutlineEyeInvisible />
+                                ) : (
+                                  <AiOutlineEye />
+                                )}
+                              </div>
+                            </div>
+                          </div>
                         </form>
                       </div>
                     )}
