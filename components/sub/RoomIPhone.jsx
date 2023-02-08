@@ -116,11 +116,20 @@ const RoomIPhone = ({ our_user }) => {
 
   useEffect(() => {
     // stopScrolling();
+    let scrollPosition = 0;
     const body = document.querySelector("body");
+    scrollPosition = window.pageYOffset;
     body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollPosition}px`;
+    body.style.width = "100%";
 
     return () => {
-      body.style.overflow = "auto";
+      body.style.removeProperty("overflow");
+      body.style.removeProperty("position");
+      body.style.removeProperty("top");
+      body.style.removeProperty("width");
+      window.scrollTo(0, scrollPosition);
     };
   }, []);
 
