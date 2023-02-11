@@ -14,8 +14,8 @@ import { toast } from "react-hot-toast";
 
 import { AiOutlineSend } from "react-icons/ai";
 import { IoEnterOutline } from "react-icons/io5";
-import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase";
+import { useAuth } from "../../context/AuthContext";
+import { db } from "../../firebase";
 
 function getTime(UNIX_timestamp) {
   var a = new Date(UNIX_timestamp);
@@ -26,7 +26,7 @@ function getTime(UNIX_timestamp) {
   return time;
 }
 
-const Room = ({ our_user }) => {
+const MobileRoom = ({ our_user }) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [snapshotCount, setSnapshotCount] = useState(0);
@@ -255,4 +255,4 @@ const Room = ({ our_user }) => {
   );
 };
 
-export default Room;
+export default MobileRoom;

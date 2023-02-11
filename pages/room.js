@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 
 import { isIOS, isSafari, isChrome } from "react-device-detect";
 import RoomIPhone from "../components/sub/RoomIPhone";
+import MobileRoom from "../components/sub/MobileRoom";
 
 // console.log();
 
@@ -50,10 +51,8 @@ const RoomPage = () => {
           <RoomLayout>
             <Room our_user={our_user} />
           </RoomLayout>
-        ) : isIOS ? (
-          <RoomIPhone our_user={our_user} />
         ) : (
-          <Room our_user={our_user} />
+          <MobileRoom our_user={our_user} />
         )}
       </main>
     </>
