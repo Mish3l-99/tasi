@@ -147,7 +147,7 @@ const MobileRoom = ({ our_user }) => {
       className="h-screen w-full flex flex-col overflow-auto relative md:bg-blue-200"
     >
       {/* first */}
-      <div className="fixed h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 flex items-center justify-between py-0 md:py-2 bg-blue-200">
+      {/* <div className="fixed h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 flex items-center justify-between py-0 md:py-2 bg-blue-200">
         <div className="px-3 my-auto h-fit">
           <p className="font-semibold text-[16px] md:text-[20px]">
             محادثة مباشرة - TASI
@@ -177,11 +177,11 @@ const MobileRoom = ({ our_user }) => {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* messages box */}
       <div
         id="messages-container"
-        className="absolute md:sticky md:my-0 top-[55px] bottom-[55px] right-0 left-0 w-full flex-1 overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
+        className="w-full flex-1 overflow-y-auto pt-[3px] scrollbar-hide"
       >
         <div className="px-2 bg-white pt-1 rounded">
           {messages?.map((msg, i) => {
@@ -223,7 +223,66 @@ const MobileRoom = ({ our_user }) => {
           <div ref={messagesEndRef} />
         </div>
       </div>
-      <div className="fixed h-[50px] md:h-fit md:sticky w-full bottom-0 left-0 right-0 p-2 border-t bg-blue-200 z-[99]">
+      <div className="h-fit w-full border-t bg-blue-200">
+        <form
+          action=""
+          autocomplete="off"
+          className="flex gap-x-3 items-center p-2"
+        >
+          <input
+            id="input_area"
+            ref={messageBoxRef}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            type="text"
+            // type="search"
+            className="flex-1 w-full border px-2 py-1 outline-none "
+            placeholder="الرسالة..."
+            aria-autocomplete="both"
+            aria-haspopup="false"
+            autocomplete="off"
+          />
+          <button
+            onClick={(e) => sendMessage(e)}
+            className="flex items-center gap-x-2 border-2 px-3 py-1 text-white bg-tasi"
+          >
+            <span className="hidden md:block">أرسل</span>
+            <AiOutlineSend size={18} className="scale-x-[-1]" />
+          </button>
+        </form>
+        <div className="w-full flex items-center justify-between py-2 bg-blue-200">
+          <div className="px-3 my-auto h-fit">
+            <p className="font-semibold text-[16px] md:text-[20px]">
+              محادثة مباشرة - TASI
+            </p>
+          </div>
+          <div className="flex items-center gap-x-2 px-3 my-auto h-fit">
+            <div className="w-8 h-8 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
+              {our_user.from === null ? (
+                ""
+              ) : our_user.image === "" || our_user.image === null ? (
+                our_user?.from[0]?.toUpperCase()
+              ) : (
+                <Image
+                  className="rounded-full"
+                  alt="/"
+                  src={our_user?.image}
+                  fill
+                />
+              )}
+            </div>
+            <div>
+              <Link href="/">
+                <div className="flex items-center gap-x-1 py-[1px] px-1 md:px-2 bg-gray-50 rounded">
+                  <span className="hidden md:block">الخروج</span>
+                  <IoEnterOutline className="scale-x-[-1]" />
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div className="fixed h-[50px] md:h-fit md:sticky w-full bottom-0 left-0 right-0 p-2 border-t bg-blue-200 z-[99]">
         <form
           action=""
           autocomplete="off"
@@ -250,7 +309,7 @@ const MobileRoom = ({ our_user }) => {
             <AiOutlineSend size={18} className="scale-x-[-1]" />
           </button>
         </form>
-      </div>
+      </div> */}
     </div>
   );
 };
