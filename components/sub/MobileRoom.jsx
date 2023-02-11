@@ -223,7 +223,7 @@ const MobileRoom = ({ our_user }) => {
           <div ref={messagesEndRef} />
         </div>
       </div>
-      <div className="h-fit w-full border-t bg-blue-200">
+      <div className="sticky h-fit w-full border-t bg-blue-200">
         <form
           action=""
           autocomplete="off"
