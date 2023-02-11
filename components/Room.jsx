@@ -64,9 +64,9 @@ const Room = ({ our_user }) => {
     e.preventDefault(e);
     // messageBoxRef.current?.focus();
     const readyMessage = filterMessage(message);
-    setMessage("");
     if (readyMessage !== "") {
       const createdAt = new Date().getTime();
+      setMessage("");
       await addDoc(collection(db, "messages"), {
         ...our_user,
         text: readyMessage,

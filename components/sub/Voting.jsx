@@ -42,6 +42,25 @@ const Voting = () => {
 
   const { user, updateUserLastV } = useAuth();
 
+  const userVoteGetting = () => {
+    // get actual user vote
+    const todayDate = getDate(new Date().getTime());
+
+    if (user !== null) {
+      const lastVDate = getDate(new Date(user.lastVoted).getTime());
+      if (lastVDate === todayDate) {
+        setVoted(localStorage.getItem("voted"));
+        setShow(true);
+      }
+    } else {
+      const lastVDate = localStorage.getItem("lastVDate");
+      if (lastVDate === todayDate) {
+        setVoted(localStorage.getItem("voted"));
+        setShow(true);
+      }
+    }
+  };
+
   const getVoting = async () => {
     const todayDate = getDate(new Date().getTime());
     const todayDoc = await getDoc(doc(db, "voting", todayDate));
@@ -54,18 +73,17 @@ const Voting = () => {
 
       setVoting({ up, down, total });
     } else {
-      await setDoc(doc(db, "voting", todayDate), {
-        voters_up: 0,
-        voters_down: 0,
-      });
-      // setVoting({ up: 50, down: 50, total: 0 });
+      if (validDay()) {
+        await setDoc(doc(db, "voting", todayDate), {
+          voters_up: 0,
+          voters_down: 0,
+        });
+        // setVoting({ up: 50, down: 50, total: 0 });
+      }
     }
 
-    // get actual user vote
-    if (localStorage.getItem("voted") !== null) {
-      setVoted(localStorage.getItem("voted"));
-      setShow(true);
-    }
+    // actual user vote showing if voted today
+    userVoteGetting();
   };
 
   useEffect(() => {
@@ -85,6 +103,17 @@ const Voting = () => {
   //     return !res.exists();
   //   });
   // };
+
+  const validDay = () => {
+    const dayName = new Date().toLocaleString("en-us", {
+      weekday: "long",
+    });
+    if (dayName === "Friday" || dayName === "Saturday") {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const openInNewTab = (url) => {
     const newWindow = window.open(url, "_blank", "noopener,noreferrer");
@@ -131,50 +160,58 @@ const Voting = () => {
   };
 
   const voteUp = async () => {
-    setLoading(true);
-    if (localStorage.getItem("voted") !== null) {
-      setVoted(localStorage.getItem("voted"));
-    }
+    if (validDay()) {
+      setLoading(true);
+      if (localStorage.getItem("voted") !== null) {
+        setVoted(localStorage.getItem("voted"));
+      }
 
-    const todayDate = getDate(new Date().getTime());
-    if (allowedV()) {
-      const todayDoc = await getDoc(doc(db, "voting", todayDate));
-      const newVotersUp = todayDoc.data().voters_up + 1;
-      const newFields = { voters_up: newVotersUp };
-      await updateDoc(doc(db, "voting", todayDate), newFields);
-      updateUserLastV();
-      setVoted("up");
-      localStorage.setItem("voted", "up");
+      const todayDate = getDate(new Date().getTime());
+      if (allowedV()) {
+        const todayDoc = await getDoc(doc(db, "voting", todayDate));
+        const newVotersUp = todayDoc.data().voters_up + 1;
+        const newFields = { voters_up: newVotersUp };
+        await updateDoc(doc(db, "voting", todayDate), newFields);
+        updateUserLastV();
+        setVoted("up");
+        localStorage.setItem("voted", "up");
+      } else {
+        toast.error("يتاح التصويت مرة باليوم !");
+      }
+
+      setShow(true);
+      setLoading(false);
     } else {
-      toast.error("يتاح التصويت مرة باليوم !");
+      toast.error("التصويت غير متاح اليوم !");
     }
-
-    setShow(true);
-    setLoading(false);
   };
 
   const voteDown = async () => {
-    setLoading(true);
-    if (localStorage.getItem("voted") !== null) {
-      setVoted(localStorage.getItem("voted"));
-    }
-    const todayDate = getDate(new Date().getTime());
-    if (allowedV()) {
-      const todayDoc = await getDoc(doc(db, "voting", todayDate));
-      const newVotersDown = todayDoc.data().voters_down + 1;
-      const newFields = { voters_down: newVotersDown };
-      await updateDoc(doc(db, "voting", todayDate), newFields);
-      updateUserLastV();
-      setVoted("down");
-      localStorage.setItem("voted", "down");
+    if (validDay()) {
+      setLoading(true);
+      if (localStorage.getItem("voted") !== null) {
+        setVoted(localStorage.getItem("voted"));
+      }
+      const todayDate = getDate(new Date().getTime());
+      if (allowedV()) {
+        const todayDoc = await getDoc(doc(db, "voting", todayDate));
+        const newVotersDown = todayDoc.data().voters_down + 1;
+        const newFields = { voters_down: newVotersDown };
+        await updateDoc(doc(db, "voting", todayDate), newFields);
+        updateUserLastV();
+        setVoted("down");
+        localStorage.setItem("voted", "down");
+      } else {
+        toast.error("يتاح التصويت مرة باليوم !");
+      }
+      setShow(true);
+      setLoading(false);
     } else {
-      toast.error("يتاح التصويت مرة باليوم !");
+      toast.error("التصويت غير متاح اليوم !");
     }
-    setShow(true);
-    setLoading(false);
   };
 
-  // console.log(voting);
+  // console.log();
 
   return (
     <div className="w-full flex-1 p-4 bg-blue-200">
@@ -238,7 +275,7 @@ const Voting = () => {
           </div>
 
           <div className="hidden lg:block flex-1 w-full h-8 bg-gray-400">
-            {show && voting && (
+            {show && voting && !isNaN(voting.up) && (
               <div className="w-full flex h-8 text-white text-sm bg-gray-500">
                 <div
                   className="bg-green-600 h-full w-full flex items-center justify-center"
@@ -278,7 +315,7 @@ const Voting = () => {
           </div>
         </div>
         <div className="mt-2 lg:hidden flex-1 w-full h-8 bg-gray-400">
-          {show && voting && (
+          {show && voting && !isNaN(voting.up) && (
             <div className="w-full flex h-8 text-white text-sm bg-gray-500">
               <div
                 className="bg-green-600 h-full w-full flex items-center justify-center"

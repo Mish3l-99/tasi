@@ -70,9 +70,9 @@ const RoomIPhone = ({ our_user }) => {
     e.preventDefault(e);
     // messageBoxRef.current?.focus();
     const readyMessage = filterMessage(message);
-    setMessage("");
     if (readyMessage !== "") {
       const createdAt = new Date().getTime();
+      setMessage("");
       await addDoc(collection(db, "messages"), {
         ...our_user,
         text: readyMessage,
@@ -126,7 +126,7 @@ const RoomIPhone = ({ our_user }) => {
     if (snapshotCount > 1) {
       setTimeout(() => {
         scrollBottomSmooth();
-      }, 50);
+      }, 10);
     } else {
       // first time
       scrollToBottom();
