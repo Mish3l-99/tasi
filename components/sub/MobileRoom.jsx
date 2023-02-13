@@ -139,6 +139,8 @@ const MobileRoom = ({ our_user }) => {
     return;
   }
 
+  console.log(our_user);
+
   // console.log(our_user);
 
   return (

@@ -143,7 +143,7 @@ const Hero = () => {
               // src="/t.png"
               width={500}
               height={700}
-              className="object-cover hover:scale-95 duration-500 ease-in shadow-sm shadow-gray-600 "
+              className="object-cover hover:shadow-xl duration-500 ease-in shadow-sm shadow-gray-600 "
               alt=""
             />
           </div>
