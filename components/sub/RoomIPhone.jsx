@@ -196,7 +196,7 @@ const RoomIPhone = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="flex-1 w-full overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
+        className="flex-1 w-full pb-[45px] overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
       >
         <div className="px-2 bg-white pt-1 rounded">
           {messages?.map((msg, i) => {
@@ -239,7 +239,7 @@ const RoomIPhone = ({ our_user }) => {
         </div>
       </div>
       {/* third */}
-      <div className="sticky w-full p-2 border-t bg-blue-200">
+      <div className="absolute bottom-0 right-0 left-0 w-full p-2 border-t bg-blue-200">
         <form
           action=""
           autocomplete="off"
