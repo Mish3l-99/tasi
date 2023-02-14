@@ -110,7 +110,8 @@ const RoomIPhone = ({ our_user }) => {
   };
 
   const stopScrolling = () => {
-    const targetDiv = document.getElementById("messages-container");
+    // const targetDiv = document.getElementById("messages-container");
+    const targetDiv = document.getElementById("this-it");
     disableBodyScroll(targetDiv);
   };
 
@@ -162,10 +163,11 @@ const RoomIPhone = ({ our_user }) => {
   return (
     <div
       dir="rtl"
-      className="h-screen w-screen flex flex-col md:bg-blue-200 relative"
+      id="this-it"
+      className="h-screen w-screen md:bg-blue-200 relative"
     >
       {/* first */}
-      <div className="sticky pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
+      <div className="absolute top-0 right-0 left-0 pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
         <div className="px-3 my-auto h-fit">
           <p className="font-semibold text-[16px] md:text-[20px]">
             محادثة مباشرة - TASI
@@ -199,7 +201,7 @@ const RoomIPhone = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="h-full w-full pb-[45px] overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
+        className="h-full w-full py-[45px] overflow-y-auto pt-[3px] scrollbar-hide md:px-2"
       >
         <div className="px-2 bg-white pt-1 rounded">
           {messages?.map((msg, i) => {
