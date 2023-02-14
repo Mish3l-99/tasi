@@ -103,12 +103,6 @@ const RoomIPhone = ({ our_user }) => {
   const messagesEndRef = useRef(null);
   const messageBoxRef = useRef(null);
 
-  const scrollToBottom = () => {
-    // const objDiv = document.getElementById("messages-container");
-    // objDiv.scrollTop = objDiv.scrollHeight;
-    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
-  };
-
   const stopScrolling = () => {
     // const targetDiv = document.getElementById("messages-container");
     const targetDiv = document.getElementById("this-it");
@@ -124,6 +118,12 @@ const RoomIPhone = ({ our_user }) => {
 
   const scrollBottomSmooth = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToBottom = () => {
+    // const objDiv = document.getElementById("messages-container");
+    // objDiv.scrollTop = objDiv.scrollHeight;
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
   };
 
   useEffect(() => {
@@ -164,7 +164,7 @@ const RoomIPhone = ({ our_user }) => {
     <div
       dir="rtl"
       id="this-it"
-      className="h-screen w-screen md:bg-blue-200 overflow-y-auto pt-[3px] scrollbar-hide relative"
+      className="h-screen w-screen md:bg-blue-200 pt-[50px] overflow-y-auto scrollbar-hide relative"
     >
       {/* first */}
       <div className="fixed top-0 right-0 left-0 z-[99] pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
@@ -199,7 +199,7 @@ const RoomIPhone = ({ our_user }) => {
         </div>
       </div>
       {/* messages box */}
-      <div id="messages-container" className="h-full w-full py-[45px]  md:px-2">
+      <div id="messages-container" className="h-full w-full md:px-2">
         <div className="px-2 bg-white pt-1 rounded">
           {messages?.map((msg, i) => {
             let me = msg.user === our_user.user;
@@ -237,11 +237,11 @@ const RoomIPhone = ({ our_user }) => {
               </div>
             );
           })}
-          <div ref={messagesEndRef} />
+          <div className="pt-[50px]" ref={messagesEndRef} />
         </div>
       </div>
       {/* third */}
-      <div className="fixed bottom-0 right-0 left-0 w-full p-2 border-t bg-blue-200 z-[99]">
+      <div className="fixed bottom-0 right-0 left-0 z-[99] w-full p-2 border-t bg-blue-200">
         <form
           action=""
           autocomplete="off"
