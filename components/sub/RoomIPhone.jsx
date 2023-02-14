@@ -116,6 +116,9 @@ const RoomIPhone = ({ our_user }) => {
 
   useEffect(() => {
     stopScrolling();
+    return () => {
+      clearAllBodyScrollLocks();
+    };
   }, []);
 
   const scrollBottomSmooth = () => {
@@ -159,7 +162,7 @@ const RoomIPhone = ({ our_user }) => {
   return (
     <div dir="rtl" className="h-screen w-screen flex flex-col md:bg-blue-200">
       {/* first */}
-      <div className="sticky right-0 left-0 top-0 z-[99] pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
+      <div className="sticky pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
         <div className="px-3 my-auto h-fit">
           <p className="font-semibold text-[16px] md:text-[20px]">
             محادثة مباشرة - TASI
@@ -236,7 +239,7 @@ const RoomIPhone = ({ our_user }) => {
         </div>
       </div>
       {/* third */}
-      <div className="sticky bottom-0 right-0 left-0 w-full p-2 border-t bg-blue-200 z-[99]">
+      <div className="sticky w-full p-2 border-t bg-blue-200">
         <form
           action=""
           autocomplete="off"
