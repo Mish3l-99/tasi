@@ -261,7 +261,7 @@ const RoomIPhone = ({ our_user, isChrome }) => {
       {/* third */}
       <div
         ref={bottomDiv}
-        className="absolute bottom-0 right-0 left-0 z-[99] w-full p-2 border-t bg-blue-200"
+        className="fixed bottom-0 right-0 left-0 z-[99] w-full p-2 border-t bg-blue-200"
       >
         <form
           action=""
