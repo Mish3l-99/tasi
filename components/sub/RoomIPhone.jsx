@@ -215,6 +215,7 @@ const RoomIPhone = ({ our_user, isChrome }) => {
       </div>
       {/* messages box */}
       <div
+        style={{ marginBottom: bottomDivH }}
         id="messages-container"
         className="flex-1 w-full md:px-2 overflow-y-auto scrollbar-hide"
       >
@@ -262,7 +263,10 @@ const RoomIPhone = ({ our_user, isChrome }) => {
         <div ref={messagesEndRef} />
       </div>
       {/* third */}
-      <div ref={bottomDiv} className="sticky w-full p-2 border-t bg-blue-200">
+      <div
+        ref={bottomDiv}
+        className="fixed bottom-0 right-0 left-0 w-full p-2 border-t bg-blue-200"
+      >
         <form
           action=""
           autocomplete="off"
