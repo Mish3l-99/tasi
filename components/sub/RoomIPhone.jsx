@@ -176,7 +176,7 @@ const RoomIPhone = ({ our_user, isChrome }) => {
       dir="rtl"
       id="this-it"
       // style={{ paddingTop: topDivH }}
-      className="h-screen w-screen md:bg-blue-200 flex flex-col"
+      className="h-screen w-screen md:bg-blue-200 flex flex-col overflow-auto"
     >
       {/* first */}
       <div
