@@ -110,8 +110,8 @@ const RoomIPhone = ({ our_user, isChrome }) => {
   const messageBoxRef = useRef(null);
 
   const stopScrolling = () => {
-    // const targetDiv = document.getElementById("messages-container");
-    const targetDiv = document.getElementById("this-it");
+    const targetDiv = document.getElementById("messages-container");
+    // const targetDiv = document.getElementById("this-it");
     disableBodyScroll(targetDiv);
   };
 
@@ -175,13 +175,13 @@ const RoomIPhone = ({ our_user, isChrome }) => {
     <div
       dir="rtl"
       id="this-it"
-      style={{ paddingTop: topDivH }}
-      className="h-screen w-screen md:bg-blue-200 overflow-y-auto scrollbar-hide "
+      // style={{ paddingTop: topDivH }}
+      className="h-screen w-screen md:bg-blue-200 flex flex-col"
     >
       {/* first */}
       <div
         ref={topDiv}
-        className="fixed top-0 right-0 left-0 z-[99] pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200"
+        className="sticky pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200"
       >
         <div className="px-3 my-auto h-fit">
           <p className="font-semibold text-[16px] md:text-[20px]">
@@ -214,9 +214,12 @@ const RoomIPhone = ({ our_user, isChrome }) => {
         </div>
       </div>
       {/* messages box */}
-      <div id="messages-container" className="h-full w-full md:px-2">
+      <div
+        id="messages-container"
+        className="flex-1 w-full md:px-2 overflow-y-auto scrollbar-hide"
+      >
         <div
-          style={{ paddingBottom: bottomDivH }}
+          // style={{ paddingBottom: bottomDivH }}
           className="px-2 bg-white pt-1 rounded"
         >
           {messages?.map((msg, i) => {
@@ -259,10 +262,7 @@ const RoomIPhone = ({ our_user, isChrome }) => {
         <div ref={messagesEndRef} />
       </div>
       {/* third */}
-      <div
-        ref={bottomDiv}
-        className="fixed bottom-0 right-0 left-0 z-[99] w-full p-2 border-t bg-blue-200"
-      >
+      <div ref={bottomDiv} className="sticky w-full p-2 border-t bg-blue-200">
         <form
           action=""
           autocomplete="off"
