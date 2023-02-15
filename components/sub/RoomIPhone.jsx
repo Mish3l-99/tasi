@@ -32,10 +32,13 @@ function getTime(UNIX_timestamp) {
   return time;
 }
 
-const RoomIPhone = ({ our_user }) => {
+const RoomIPhone = ({ our_user, isChrome }) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [snapshotCount, setSnapshotCount] = useState(0);
+
+  const [bottomDivH, setBottomDivH] = useState(0);
+  const [topDivH, setTopDivH] = useState(0);
 
   const router = useRouter();
 
@@ -100,6 +103,9 @@ const RoomIPhone = ({ our_user }) => {
       ),
     []
   );
+  const topDiv = useRef(null);
+  const bottomDiv = useRef(null);
+
   const messagesEndRef = useRef(null);
   const messageBoxRef = useRef(null);
 
@@ -114,6 +120,11 @@ const RoomIPhone = ({ our_user }) => {
     return () => {
       clearAllBodyScrollLocks();
     };
+  }, []);
+
+  useEffect(() => {
+    setBottomDivH(bottomDiv.current.clientHeight);
+    setTopDivH(topDiv.current.clientHeight);
   }, []);
 
   const scrollBottomSmooth = () => {
@@ -158,16 +169,20 @@ const RoomIPhone = ({ our_user }) => {
     return;
   }
 
-  // console.log(our_user);
+  // console.log(isChrome);
 
   return (
     <div
       dir="rtl"
       id="this-it"
-      className="h-screen w-screen md:bg-blue-200 pt-[50px] overflow-y-auto scrollbar-hide relative"
+      style={{ paddingTop: topDivH }}
+      className="h-screen w-screen md:bg-blue-200 overflow-y-auto scrollbar-hide "
     >
       {/* first */}
-      <div className="fixed top-0 right-0 left-0 z-[99] pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200">
+      <div
+        ref={topDiv}
+        className="fixed top-0 right-0 left-0 z-[99] pb-2 w-full flex items-center justify-between py-2 md:py-2 bg-blue-200"
+      >
         <div className="px-3 my-auto h-fit">
           <p className="font-semibold text-[16px] md:text-[20px]">
             محادثة مباشرة - TASI
@@ -200,7 +215,10 @@ const RoomIPhone = ({ our_user }) => {
       </div>
       {/* messages box */}
       <div id="messages-container" className="h-full w-full md:px-2">
-        <div className="px-2 bg-white pt-1 rounded">
+        <div
+          style={{ paddingBottom: bottomDivH }}
+          className="px-2 bg-white pt-1 rounded"
+        >
           {messages?.map((msg, i) => {
             let me = msg.user === our_user.user;
             let clas = me ? "bg-green-100" : "bg-blue-50";
@@ -237,11 +255,14 @@ const RoomIPhone = ({ our_user }) => {
               </div>
             );
           })}
-          <div className="pt-[50px]" ref={messagesEndRef} />
         </div>
+        <div ref={messagesEndRef} />
       </div>
       {/* third */}
-      <div className="fixed bottom-0 right-0 left-0 z-[99] w-full p-2 border-t bg-blue-200">
+      <div
+        ref={bottomDiv}
+        className="absolute bottom-0 right-0 left-0 z-[99] w-full p-2 border-t bg-blue-200"
+      >
         <form
           action=""
           autocomplete="off"
