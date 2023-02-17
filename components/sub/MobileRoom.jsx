@@ -117,8 +117,8 @@ const MobileRoom = ({ our_user }) => {
   const sendBox = useRef(null);
 
   useEffect(() => {
-    setHeight(screen.height - sendBox.current.clientHeight);
-    // setHeight(window.innerHeight - sendBox.current.clientHeight);
+    // setHeight(screen.height - sendBox.current.clientHeight);
+    setHeight(window.innerHeight - sendBox.current.clientHeight);
   }, []);
 
   const scrollToBottom = () => {
