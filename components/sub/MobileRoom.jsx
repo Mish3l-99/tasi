@@ -165,10 +165,7 @@ const MobileRoom = ({ our_user }) => {
   // console.log(our_user);
 
   return (
-    <div
-      dir="rtl"
-      className="h-screen w-screen overflow-hidden relative md:bg-blue-200"
-    >
+    <div dir="rtl" className="w-screen overflow-hidden relative md:bg-blue-200">
       {/* first */}
       {/* <div className="fixed h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 flex items-center justify-between py-0 md:py-2 bg-blue-200">
         <div className="px-3 my-auto h-fit">
