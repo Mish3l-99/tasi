@@ -259,11 +259,12 @@ const MobileRoom = ({ our_user }) => {
       </div>
       <div
         ref={sendBox}
-        className={
-          !messages
-            ? "h-fit w-full border-t bg-blue-200 fixed bottom-0"
-            : "h-fit w-full border-t bg-blue-200 sticky"
-        }
+        // className={
+        //   !messages
+        //     ? "h-fit w-full border-t bg-blue-200 fixed bottom-0"
+        //     : "h-fit w-full border-t bg-blue-200 sticky"
+        // }
+        className="h-fit w-full border-t bg-blue-200 fixed bottom-0"
       >
         <form
           action=""
