@@ -115,7 +115,8 @@ const MobileRoom = ({ our_user }) => {
   const sendBox = useRef(null);
 
   useEffect(() => {
-    setHeight(window.innerHeight - sendBox.current.clientHeight);
+    setHeight(screen.height - sendBox.current.clientHeight);
+    // setHeight(window.innerHeight - sendBox.current.clientHeight);
   }, []);
 
   const scrollToBottom = () => {
@@ -244,10 +245,7 @@ const MobileRoom = ({ our_user }) => {
           <div ref={messagesEndRef} />
         </div>
       </div>
-      <div
-        ref={sendBox}
-        className="fixed bottom-0 left-0 right-0 h-fit w-full border-t bg-blue-200"
-      >
+      <div ref={sendBox} className="h-fit w-full border-t bg-blue-200">
         <form
           action=""
           autocomplete="off"
