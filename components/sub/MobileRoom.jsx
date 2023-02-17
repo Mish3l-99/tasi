@@ -1,3 +1,4 @@
+import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
 import {
   addDoc,
   collection,
@@ -32,6 +33,18 @@ const MobileRoom = ({ our_user }) => {
   const [snapshotCount, setSnapshotCount] = useState(0);
 
   const router = useRouter();
+
+  const stopScrolling = () => {
+    const targetDiv = document.getElementById("messages-container");
+    disableBodyScroll(targetDiv);
+  };
+
+  useEffect(() => {
+    stopScrolling();
+    return () => {
+      clearAllBodyScrollLocks();
+    };
+  }, []);
 
   // const { user } = useAuth();
 

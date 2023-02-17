@@ -51,10 +51,8 @@ const RoomPage = () => {
           <RoomLayout>
             <Room our_user={our_user} />
           </RoomLayout>
-        ) : isIOS ? (
-          <RoomIPhone our_user={our_user} isChrome />
         ) : (
-          <Room our_user={our_user} />
+          <MobileRoom our_user={our_user} />
         )}
       </main>
     </>
