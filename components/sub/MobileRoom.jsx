@@ -196,7 +196,7 @@ const MobileRoom = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="w-full overflow-y-auto pt-[3px] scrollbar-hide"
+        className="w-full flex-1 overflow-y-auto pt-[3px] scrollbar-hide"
       >
         <div className="px-2 bg-white pt-1 rounded">
           {messages?.map((msg, i) => {
@@ -238,7 +238,7 @@ const MobileRoom = ({ our_user }) => {
           <div ref={messagesEndRef} />
         </div>
       </div>
-      <div className="sticky h-fit w-full border-t bg-blue-200">
+      <div className=" h-fit w-full border-t bg-blue-200">
         <form
           action=""
           autocomplete="off"
