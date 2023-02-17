@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { isIOS } from "react-device-detect";
+import { isAndroid, isChrome, isIOS } from "react-device-detect";
 import { toast } from "react-hot-toast";
 
 import { AiOutlineSend } from "react-icons/ai";
@@ -119,10 +119,10 @@ const MobileRoom = ({ our_user }) => {
 
   useEffect(() => {
     // setHeight(screen.height - sendBox.current.clientHeight);
-    if (isIOS) {
-      setHeight(window.innerHeight - sendBox.current.clientHeight);
-    } else {
+    if (isAndroid && isChrome) {
       setHeight(screen.height - sendBox.current.clientHeight);
+    } else {
+      setHeight(window.innerHeight - sendBox.current.clientHeight);
     }
   }, []);
 
