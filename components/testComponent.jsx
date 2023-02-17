@@ -34,17 +34,17 @@ const MobileRoom = ({ our_user }) => {
 
   const router = useRouter();
 
-  const stopScrolling = () => {
-    const targetDiv = document.getElementById("messages-container");
-    disableBodyScroll(targetDiv);
-  };
+  // const stopScrolling = () => {
+  //   const targetDiv = document.getElementById("messages-container");
+  //   disableBodyScroll(targetDiv);
+  // };
 
-  useEffect(() => {
-    stopScrolling();
-    return () => {
-      clearAllBodyScrollLocks();
-    };
-  }, []);
+  // useEffect(() => {
+  //   stopScrolling();
+  //   return () => {
+  //     clearAllBodyScrollLocks();
+  //   };
+  // }, []);
 
   // const { user } = useAuth();
 
@@ -159,7 +159,7 @@ const MobileRoom = ({ our_user }) => {
   return (
     <div
       dir="rtl"
-      className="h-screen w-screen flex flex-col overflow-auto relative md:bg-blue-200"
+      className="h-screen w-full flex flex-col overflow-auto relative md:bg-blue-200"
     >
       {/* first */}
       {/* <div className="fixed h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 flex items-center justify-between py-0 md:py-2 bg-blue-200">
@@ -196,7 +196,7 @@ const MobileRoom = ({ our_user }) => {
       {/* messages box */}
       <div
         id="messages-container"
-        className="w-full overflow-y-auto pt-[3px] scrollbar-hide"
+        className="w-full flex-1 overflow-y-auto pt-[3px] scrollbar-hide"
       >
         <div className="px-2 bg-white pt-1 rounded">
           {messages?.map((msg, i) => {
