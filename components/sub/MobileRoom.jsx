@@ -17,6 +17,7 @@ import { AiOutlineSend } from "react-icons/ai";
 import { IoEnterOutline } from "react-icons/io5";
 import { useAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
+import Loading from "../Loading";
 
 function getTime(UNIX_timestamp) {
   var a = new Date(UNIX_timestamp);
@@ -28,7 +29,7 @@ function getTime(UNIX_timestamp) {
 }
 
 const MobileRoom = ({ our_user }) => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState();
   const [message, setMessage] = useState("");
   const [snapshotCount, setSnapshotCount] = useState(0);
 
@@ -109,6 +110,7 @@ const MobileRoom = ({ our_user }) => {
       ),
     []
   );
+
   const messagesEndRef = useRef(null);
   const messageBoxRef = useRef(null);
 
@@ -161,6 +163,10 @@ const MobileRoom = ({ our_user }) => {
     return;
   }
 
+  // if (!messages) {
+  //   return <Loading />;
+  // }
+
   console.log(our_user);
 
   // console.log(our_user);
@@ -206,46 +212,59 @@ const MobileRoom = ({ our_user }) => {
         className="w-full overflow-y-auto pt-[3px] scrollbar-hide"
       >
         <div className="px-2 bg-white pt-1 rounded">
-          {messages?.map((msg, i) => {
-            let me = msg.user === our_user.user;
-            let clas = me ? "bg-green-100" : "bg-blue-50";
-            let BGclas = me ? "bg-green-600" : "bg-slate-700";
+          {!messages ? (
+            <Loading />
+          ) : (
+            messages?.map((msg, i) => {
+              let me = msg.user === our_user.user;
+              let clas = me ? "bg-green-100" : "bg-blue-50";
+              let BGclas = me ? "bg-green-600" : "bg-slate-700";
 
-            return (
-              <div key={i} dir="" className="flex items-start gap-x-1 mb-1">
-                <div
-                  className={`w-8 h-8 p-2 rounded-full ${BGclas} text-white flex items-center justify-center relative`}
-                >
-                  {!msg.image ? (
-                    msg?.from[0]?.toUpperCase()
-                  ) : (
-                    <Image
-                      className="rounded-full"
-                      alt="/"
-                      src={msg.image}
-                      fill
-                    />
-                  )}
-                </div>
-                <div>
+              return (
+                <div key={i} dir="" className="flex items-start gap-x-1 mb-1">
                   <div
-                    className={`px-2 py-[3px] border w-fit rounded flex flex-col ${clas} `}
+                    className={`w-8 h-8 p-2 rounded-full ${BGclas} text-white flex items-center justify-center relative`}
                   >
-                    <div className="text-[11px] font-bold text-tasi">
-                      {msg.from}
-                    </div>
-
-                    <div>{msg.text}</div>
+                    {!msg.image ? (
+                      msg?.from[0]?.toUpperCase()
+                    ) : (
+                      <Image
+                        className="rounded-full"
+                        alt="/"
+                        src={msg.image}
+                        fill
+                      />
+                    )}
                   </div>
-                  <span className="text-[12px]">{getTime(msg.createdAt)}</span>
+                  <div>
+                    <div
+                      className={`px-2 py-[3px] border w-fit rounded flex flex-col ${clas} `}
+                    >
+                      <div className="text-[11px] font-bold text-tasi">
+                        {msg.from}
+                      </div>
+
+                      <div>{msg.text}</div>
+                    </div>
+                    <span className="text-[12px]">
+                      {getTime(msg.createdAt)}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
           <div ref={messagesEndRef} />
         </div>
       </div>
-      <div ref={sendBox} className="h-fit w-full border-t bg-blue-200">
+      <div
+        ref={sendBox}
+        className={
+          !messages
+            ? "h-fit w-full border-t bg-blue-200 fixed bottom-0"
+            : "h-fit w-full border-t bg-blue-200"
+        }
+      >
         <form
           action=""
           autocomplete="off"
