@@ -32,6 +32,8 @@ const MobileRoom = ({ our_user }) => {
   const [message, setMessage] = useState("");
   const [snapshotCount, setSnapshotCount] = useState(0);
 
+  const [height, setHeight] = useState(0);
+
   const router = useRouter();
 
   const stopScrolling = () => {
@@ -110,6 +112,12 @@ const MobileRoom = ({ our_user }) => {
   const messagesEndRef = useRef(null);
   const messageBoxRef = useRef(null);
 
+  const sendBox = useRef(null);
+
+  useEffect(() => {
+    setHeight(window.innerHeight - sendBox.current.clientHeight);
+  }, []);
+
   const scrollToBottom = () => {
     // const objDiv = document.getElementById("messages-container");
     // objDiv.scrollTop = objDiv.scrollHeight;
@@ -159,7 +167,7 @@ const MobileRoom = ({ our_user }) => {
   return (
     <div
       dir="rtl"
-      className="h-screen w-screen flex flex-col overflow-auto relative md:bg-blue-200"
+      className="h-screen w-screen overflow-hidden relative md:bg-blue-200"
     >
       {/* first */}
       {/* <div className="fixed h-[50px] md:h-fit md:sticky w-full top-0 z-[99] pb-1 flex items-center justify-between py-0 md:py-2 bg-blue-200">
@@ -195,8 +203,9 @@ const MobileRoom = ({ our_user }) => {
       </div> */}
       {/* messages box */}
       <div
+        style={{ maxHeight: height }}
         id="messages-container"
-        className="w-full flex-1 overflow-y-auto pt-[3px] scrollbar-hide"
+        className="w-full overflow-y-auto pt-[3px] scrollbar-hide"
       >
         <div className="px-2 bg-white pt-1 rounded">
           {messages?.map((msg, i) => {
@@ -238,7 +247,7 @@ const MobileRoom = ({ our_user }) => {
           <div ref={messagesEndRef} />
         </div>
       </div>
-      <div className=" h-fit w-full border-t bg-blue-200">
+      <div ref={sendBox} className="sticky h-fit w-full border-t bg-blue-200">
         <form
           action=""
           autocomplete="off"
