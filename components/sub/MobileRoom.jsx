@@ -262,7 +262,7 @@ const MobileRoom = ({ our_user }) => {
         className={
           !messages
             ? "h-fit w-full border-t bg-blue-200 fixed bottom-0"
-            : "h-fit w-full border-t bg-blue-200"
+            : "h-fit w-full border-t bg-blue-200 sticky"
         }
       >
         <form
