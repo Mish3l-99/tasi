@@ -4,9 +4,15 @@ import Navbar from "../components/Navbar";
 import Main from "../components/Main";
 import About from "../components/About";
 import Footer from "../components/Footer";
+import { clearAllBodyScrollLocks } from "body-scroll-lock";
+import { useEffect } from "react";
 // import axios from "axios";
 
 export default function Home() {
+  // useEffect(() => {
+  //   clearAllBodyScrollLocks();
+  // }, []);
+
   return (
     <div className="">
       <Head>
