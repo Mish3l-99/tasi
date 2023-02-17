@@ -34,17 +34,17 @@ const MobileRoom = ({ our_user }) => {
 
   const router = useRouter();
 
-  const stopScrolling = () => {
-    const targetDiv = document.getElementById("messages-container");
-    disableBodyScroll(targetDiv);
-  };
+  // const stopScrolling = () => {
+  //   const targetDiv = document.getElementById("messages-container");
+  //   disableBodyScroll(targetDiv);
+  // };
 
-  useEffect(() => {
-    stopScrolling();
-    return () => {
-      clearAllBodyScrollLocks();
-    };
-  }, []);
+  // useEffect(() => {
+  //   stopScrolling();
+  //   return () => {
+  //     clearAllBodyScrollLocks();
+  //   };
+  // }, []);
 
   // const { user } = useAuth();
 
