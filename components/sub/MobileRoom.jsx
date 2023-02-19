@@ -126,7 +126,8 @@ const MobileRoom = ({ our_user }) => {
 
     // for the sendBox there is scrollHeight, clientHeight, offsetHeight
     // for the window, there is innerHeight, outerHeight and more clg the window obj
-    setHeight(window.outerHeight - sendBox.current.scrollHeight);
+    // for the screen, clg the screen obj
+    setHeight(window.outerHeight - sendBox.current.offsetHeight);
     // console.log(sendBox.current.scrollHeight);
     // console.log(sendBox);
     // setHeight(window.innerHeight - sendBox.current.clientHeight);
