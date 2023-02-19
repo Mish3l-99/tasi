@@ -79,7 +79,7 @@ const MobileRoom = ({ our_user }) => {
 
   const sendMessage = async (e) => {
     e.preventDefault(e);
-    // messageBoxRef.current?.focus();
+    messageBoxRef.current.focus();
     const readyMessage = filterMessage(message);
     if (readyMessage !== "") {
       const createdAt = new Date().getTime();
