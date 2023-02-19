@@ -123,7 +123,9 @@ const MobileRoom = ({ our_user }) => {
     //   setHeight(screen.height - sendBox.current.clientHeight);
     // } else {
     // }
-    setHeight(window.innerHeight - sendBox.current.clientHeight);
+    setHeight(window.outerHeight - sendBox.current.clientHeight);
+    // setHeight(window.innerHeight - sendBox.current.clientHeight);
+    // console.log(window.height);
   }, []);
 
   const scrollToBottom = () => {
@@ -212,7 +214,7 @@ const MobileRoom = ({ our_user }) => {
       </div> */}
       {/* messages box */}
       <div
-        style={{ maxHeight: height }}
+        style={{ height: height }}
         id="messages-container"
         className="w-full overflow-y-auto pt-[3px] scrollbar-hide"
       >
