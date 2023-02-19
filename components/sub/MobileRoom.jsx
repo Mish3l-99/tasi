@@ -123,7 +123,12 @@ const MobileRoom = ({ our_user }) => {
     //   setHeight(screen.height - sendBox.current.clientHeight);
     // } else {
     // }
-    setHeight(window.outerHeight - sendBox.current.clientHeight);
+
+    // for the sendBox there is scrollHeight, clientHeight, offsetHeight
+    // for the window, there is innerHeight, outerHeight and more clg the window obj
+    setHeight(window.outerHeight - sendBox.current.scrollHeight);
+    // console.log(sendBox.current.scrollHeight);
+    // console.log(sendBox);
     // setHeight(window.innerHeight - sendBox.current.clientHeight);
     // console.log(window.height);
   }, []);
@@ -173,8 +178,6 @@ const MobileRoom = ({ our_user }) => {
   // if (!messages) {
   //   return <Loading />;
   // }
-
-  console.log(our_user);
 
   // console.log(our_user);
 

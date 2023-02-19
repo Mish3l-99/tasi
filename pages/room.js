@@ -27,7 +27,7 @@ const RoomPage = () => {
     our_user = { user: user.uid, from: user.username, image: user.image };
   }
 
-  console.log(our_user);
+  // console.log(our_user);
 
   // useEffect(() => {
   //   // window.addEventListener("resize", () => {
