@@ -41,7 +41,8 @@ const MiniRoom = () => {
 
   const enterRoom = () => {
     if (user !== null) {
-      router.push("/room");
+      // router.push("/room");
+      window.location.href = "/room";
     } else {
       openModal();
     }
@@ -49,7 +50,8 @@ const MiniRoom = () => {
 
   const getToRoom = () => {
     fillLocalUser(userField);
-    router.push("/room");
+    // router.push("/room");
+    window.location.href = "/room";
   };
 
   function closeModal() {
@@ -84,7 +86,7 @@ const MiniRoom = () => {
     []
   );
 
-  console.log(our_user);
+  // console.log(our_user);
 
   const scrollToBottom = () => {
     const objDiv = document.getElementById("messages-container");
