@@ -15,6 +15,7 @@ import { isAndroid, isChrome, isIOS } from "react-device-detect";
 import { toast } from "react-hot-toast";
 
 import { AiOutlineSend } from "react-icons/ai";
+import { BsPatchCheckFill } from "react-icons/bs";
 import { IoEnterOutline } from "react-icons/io5";
 import { useAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
@@ -232,6 +233,11 @@ const MobileRoom = ({ our_user }) => {
               let clas = me ? "bg-green-100" : "bg-blue-50";
               let BGclas = me ? "bg-green-600" : "bg-slate-700";
 
+              let member = false;
+              if (!msg.user.includes("/")) {
+                member = true;
+              }
+
               return (
                 <div key={i} dir="" className="flex items-start gap-x-1 mb-1">
                   <div
@@ -252,8 +258,13 @@ const MobileRoom = ({ our_user }) => {
                     <div
                       className={`px-2 py-[3px] border w-fit rounded flex flex-col ${clas} `}
                     >
-                      <div className="text-[11px] font-bold text-tasi">
+                      <div className="text-[11px] font-bold text-tasi flex items-center gap-x-1">
                         {msg.from}
+                        {member && (
+                          <span>
+                            <BsPatchCheckFill />
+                          </span>
+                        )}
                       </div>
 
                       <div>{msg.text}</div>

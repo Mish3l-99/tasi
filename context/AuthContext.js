@@ -45,6 +45,7 @@ export const AuthContextProvider = ({ children }) => {
               // email: user.email,
               ...res.data(),
             });
+
             // localStorage.clear();
           }
         });
@@ -84,6 +85,7 @@ export const AuthContextProvider = ({ children }) => {
       };
       await setDoc(doc(db, "users", userRes.user.uid), dataAll).then((res) => {
         toast.success("تم التسجيل بنجاح !");
+        router.push("/auth?mode=success");
       });
 
       // sign in a new to get actual data
@@ -111,7 +113,10 @@ export const AuthContextProvider = ({ children }) => {
         loginForm.pass
       );
 
+      console.log(loginRes.user.uid);
+
       toast.success("تم الدخول بنجاح !");
+      router.push("/auth?mode=success");
     } catch (error) {
       console.log(error.code);
       if (error.code === "auth/wrong-password") {
@@ -149,6 +154,7 @@ export const AuthContextProvider = ({ children }) => {
           toast.success("تم إرسال بريد الكتروني لإستعادة كلمة المرور.", {
             id: toastId,
           });
+          router.push("/auth?mode=success");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -177,16 +183,24 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const fillLocalUser = (uName) => {
-    var uniq = uName + "/" + new Date().getTime();
-    setLocalParams(uName, uniq, null);
+    if (uName !== localStorage.getItem("our_user_from")) {
+      var uniq = uName + "/" + new Date().getTime();
+      setLocalParams(uName, uniq, null);
+    }
+    // const localUser = {
+    //   user: localStorage.getItem("our_user_user"),
+    //   from: localStorage.getItem("our_user_from"),
+    //   image: localStorage.getItem("our_user_image"),
+    // };
+    // console.log(uName, localUser);
   };
 
   const logout = async () => {
     setUser(null);
     await signOut(auth);
     toast.success("تم تسجيل الخروج بنجاح !");
+    router.replace("/");
     return;
-    router.push("/");
   };
 
   return (

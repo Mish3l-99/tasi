@@ -1,5 +1,6 @@
 import { collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import Loading from "./Loading";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -7,9 +8,10 @@ import { toast } from "react-hot-toast";
 import { IoEnterOutline } from "react-icons/io5";
 import { useAuth } from "../context/AuthContext";
 import { db, storage } from "../firebase";
+import { BiLogOutCircle } from "react-icons/bi";
 
 const UserDetails = () => {
-  const { user, updateUserPhoto } = useAuth();
+  const { user, updateUserPhoto, logout } = useAuth();
 
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState();
@@ -80,12 +82,16 @@ const UserDetails = () => {
     []
   );
 
+  if (user === null) {
+    return <Loading />;
+  }
+
   return (
     <div className="py-8 mb-24">
       <div className="container">
         <div className="flex flex-col gap-y-4">
-          <div className="flex gap-x-4 md:gap-x-8 items-start">
-            <div className="w-24 h-24 md:w-36 md:h-36 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
+          <div className="flex flex-col md:flex-row gap-x-4 md:gap-x-8 items-center md:items-start">
+            <div className="mb-2 w-24 h-24 md:w-36 md:h-36 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
               {user.image ? (
                 <Image
                   className="rounded-full"
@@ -99,7 +105,7 @@ const UserDetails = () => {
                 </div>
               )}
             </div>
-            <div>
+            <div className="mt-4 flex flex-col items-center md:items-start">
               <p className="text-xl md:text-2xl font-bold">{user.username}</p>
               <p className="text-lg md:text-xl">{user.email}</p>
             </div>
@@ -114,7 +120,7 @@ const UserDetails = () => {
               <input type="file" className="flex-1" />
               <button
                 type="submit"
-                className="py-[2px] px-3 bg-tasi text-white flex items-center gap-x-2"
+                className="py-[2px] px-3 bg-blue-600 rounded text-white flex items-center gap-x-2"
               >
                 تحديث
                 {loading && (
@@ -139,6 +145,15 @@ const UserDetails = () => {
               <span className="underline hover:text-tasi">العودة</span>
             </Link>
           </div>
+          <button>
+            <span
+              onClick={() => logout()}
+              className="mt-4 w-fit cursor-pointer hover:scale-95 duration-300 flex items-center gap-x-2 border bg-white shadow-lg px-2 py-[2px] "
+            >
+              الخروج
+              <BiLogOutCircle />
+            </span>
+          </button>
         </div>
       </div>
     </div>

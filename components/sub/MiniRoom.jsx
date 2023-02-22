@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoEnterOutline } from "react-icons/io5";
 import { BiLogIn } from "react-icons/bi";
-import { BsExclamationCircleFill } from "react-icons/bs";
+import { BsExclamationCircleFill, BsPatchCheckFill } from "react-icons/bs";
 import { TiMessages } from "react-icons/ti";
 import { useRouter } from "next/router";
 import { useAuth } from "../../context/AuthContext";
@@ -133,6 +133,11 @@ const MiniRoom = () => {
             if (our_user !== null) {
               me = msg.user === our_user.user;
             }
+            let member = false;
+            if (!msg.user.includes("/")) {
+              member = true;
+            }
+
             let clas = me ? "bg-green-100" : "";
             let BGclas = me ? "bg-green-600" : "bg-slate-700";
 
@@ -160,8 +165,13 @@ const MiniRoom = () => {
                   <div
                     className={`px-2 py-[3px] border w-fit rounded flex flex-col ${clas} `}
                   >
-                    <div className="text-[11px] font-bold text-tasi">
+                    <div className="text-[11px] font-bold text-tasi flex items-center gap-x-1">
                       {msg.from}
+                      {member && (
+                        <span>
+                          <BsPatchCheckFill />
+                        </span>
+                      )}
                     </div>
 
                     <div>{msg.text}</div>
