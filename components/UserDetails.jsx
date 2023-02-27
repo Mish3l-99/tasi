@@ -8,12 +8,29 @@ import { toast } from "react-hot-toast";
 import { IoEnterOutline } from "react-icons/io5";
 import { useAuth } from "../context/AuthContext";
 import { db, storage } from "../firebase";
-import { BiLogOutCircle } from "react-icons/bi";
+import { MdSystemUpdateAlt } from "react-icons/md";
 
-const UserDetails = () => {
-  const { user, updateUserPhoto, logout } = useAuth();
+const UserDetails = ({ user }) => {
+  const {
+    updateUserData,
+    logout,
+    updateCredentials,
+    updateUserPassword,
+    ended,
+  } = useAuth();
 
   const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    pass: "",
+    pass_2: "",
+    username: user?.username,
+    email: user?.email,
+  });
+
+  useEffect(() => {
+    setLoading(false);
+  }, [ended]);
+
   const [progress, setProgress] = useState();
 
   const uploadFiles = async (file) => {
@@ -63,28 +80,55 @@ const UserDetails = () => {
     );
   };
 
-  const handleUpdateImage = async (e) => {
+  const handleUpdateData = async (e) => {
     e.preventDefault();
 
-    if (e.target[0].files === null) {
-      toast.error("لا يوجد ملف !");
+    if (form.username === "" || form.email === "") {
+      // toast.error("حقول فارغة !");
+      setLoading(false);
     } else {
-      const file = e.target[0].files[0];
+      setLoading(true);
+      updateCredentials(form);
+    }
+
+    if (form.pass !== "") {
+      if (form.pass.length < 8) {
+        toast.error("كلمة سر قصيرة !");
+        setLoading(false);
+      } else if (form.pass !== form.pass_2) {
+        toast.error("كلمة سر غير متطابقة !");
+        setLoading(false);
+      } else {
+        setLoading(true);
+        updateUserPassword(form.pass);
+      }
+    }
+
+    const file = e.target[0].files[0];
+
+    if (file) {
       uploadFiles(file);
     }
+
+    // if (e.target[0].files === null) {
+    //   toast.error("لا يوجد ملف !");
+    // } else {
+    //   const file = e.target[0].files[0];
+    //   uploadFiles(file);
+    // }
   };
 
   useEffect(
     () =>
       onSnapshot(doc(db, "users", user.uid), (snapshot) => {
-        updateUserPhoto(snapshot.data());
+        updateUserData(snapshot.data());
       }),
     []
   );
 
-  if (user === null) {
-    return <Loading />;
-  }
+  const onTyping = (e) => {
+    setForm((form) => ({ ...form, [e.target.name]: e.target.value }));
+  };
 
   return (
     <div className="py-8 mb-24">
@@ -110,50 +154,95 @@ const UserDetails = () => {
               <p className="text-lg md:text-xl">{user.email}</p>
             </div>
           </div>
-          <div className="pt-4 border-t">
-            <p>تحديث الصورة الشخصية :</p>
+          <div className="pt-4 border-t flex flex-col justify-center items-center">
+            <p className="font-semibold text-lg">تحديث البيانات</p>
             <form
               action=""
-              onSubmit={handleUpdateImage}
-              className="mt-4 flex gap-x-2 w-full md:max-w-[300px]"
+              onSubmit={handleUpdateData}
+              className="mt-4 gap-x-2 w-full flex flex-col items-center gap-y-2"
             >
-              <input type="file" className="flex-1" />
+              <div className="grid grid-cols-6">
+                <div className="col-span-2">صورة الملف :</div>
+                <div className="col-span-4">
+                  <input type="file" className="w-full" />
+                </div>
+              </div>
+              <div className="grid grid-cols-6 items-center">
+                <div className="col-span-2">إسم المستخدم :</div>
+                <div className="col-span-4">
+                  <input
+                    onChange={(e) => onTyping(e)}
+                    name="username"
+                    value={form.username}
+                    type="text"
+                    className="w-full border outline-none px-2 py-[2px]"
+                    placeholder="إسم المستخدم..."
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-6 items-center">
+                <div className="col-span-2">البريد الالكتروني :</div>
+                <div className="col-span-4">
+                  <input
+                    onChange={(e) => onTyping(e)}
+                    name="email"
+                    value={form.email}
+                    type="email"
+                    className="w-full border outline-none px-2 py-[2px]"
+                    placeholder="البريد الالكتروني..."
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-6 items-center">
+                <div className="col-span-2">كلمة المرور :</div>
+                <div className="col-span-4">
+                  <input
+                    onChange={(e) => onTyping(e)}
+                    name="pass"
+                    type="password"
+                    placeholder="****"
+                    className="w-full border outline-none px-2 py-[2px]"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-6 items-center">
+                <div className="col-span-2">تأكيد كلمة المرور :</div>
+                <div className="col-span-4">
+                  <input
+                    onChange={(e) => onTyping(e)}
+                    name="pass_2"
+                    type="password"
+                    placeholder="****"
+                    className="w-full border outline-none px-2 py-[2px]"
+                  />
+                </div>
+              </div>
               <button
                 type="submit"
-                className="py-[2px] px-3 bg-blue-600 rounded text-white flex items-center gap-x-2"
+                className="py-[1px] px-3 bg-blue-600 rounded text-white flex items-center gap-x-2 relative"
               >
                 تحديث
-                {loading && (
+                {loading ? (
                   <Image
                     alt="/"
                     src="/icons/loading.gif"
-                    height={17}
-                    width={17}
+                    height={16}
+                    width={16}
                   />
+                ) : (
+                  <MdSystemUpdateAlt className="rotate-[180deg]" />
                 )}
               </button>
             </form>
           </div>
-          <div className="mt-4 flex gap-x-8 items-center ">
+          <div className="mt-4 flex gap-x-8 items-center justify-center">
             <Link href="/room">
               <button className="bg-tasi px-2 py-[2px] text-white rounded flex items-center gap-x-2 hover:bg-green-900 duration-500">
                 الدخول للمحادثة
                 <IoEnterOutline className="scale-x-[-1]" />
               </button>
             </Link>
-            <Link href="/">
-              <span className="underline hover:text-tasi">العودة</span>
-            </Link>
           </div>
-          <button>
-            <span
-              onClick={() => logout()}
-              className="mt-4 w-fit cursor-pointer hover:scale-95 duration-300 flex items-center gap-x-2 border bg-white shadow-lg px-2 py-[2px] "
-            >
-              الخروج
-              <BiLogOutCircle />
-            </span>
-          </button>
         </div>
       </div>
     </div>

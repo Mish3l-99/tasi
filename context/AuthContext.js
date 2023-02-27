@@ -5,6 +5,8 @@ import {
   sendSignInLinkToEmail,
   signInWithEmailAndPassword,
   signOut,
+  updateEmail,
+  updatePassword,
 } from "firebase/auth";
 import {
   addDoc,
@@ -134,7 +136,7 @@ export const AuthContextProvider = ({ children }) => {
     // return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const updateUserPhoto = async (newUser) => {
+  const updateUserData = async (newUser) => {
     setUser((user) => ({ ...user, ...newUser }));
   };
 
@@ -203,6 +205,48 @@ export const AuthContextProvider = ({ children }) => {
     return;
   };
 
+  const updateUserPassword = async (newPass) => {
+    updatePassword(auth.currentUser, newPass)
+      .then(() => {
+        console.log("password success");
+        router.replace("/auth?mode=success");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const updateCredentials = async (form) => {
+    if (form.email === user.email) {
+      updateDoc(doc(db, "users", user.uid), {
+        username: form.username,
+      }).then((res) => {
+        updateUserData({ username: form.username, email: form.email });
+        toast.success("تم تحديث البيانات !");
+        setEnded(!ended);
+        router.replace("/auth?mode=success");
+      });
+    } else {
+      updateEmail(auth.currentUser, form.email)
+        .then(() => {
+          console.log("email success");
+          updateDoc(doc(db, "users", user.uid), {
+            username: form.username,
+            email: form.email,
+          }).then((res) => {
+            updateUserData({ username: form.username, email: form.email });
+            toast.success("تم تحديث البيانات !");
+            setEnded(!ended);
+            router.replace("/auth?mode=success");
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("بريد الكتروني خاطيء!");
+        });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -211,7 +255,9 @@ export const AuthContextProvider = ({ children }) => {
         resetPass,
         fillLocalUser,
         updateUserLastV,
-        updateUserPhoto,
+        updateUserData,
+        updateCredentials,
+        updateUserPassword,
         signup,
         login,
         logout,

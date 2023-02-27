@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="container">
         <div
           dir="rtl"
-          className="flex flex-col md:flex-row gap-y-4 justify-center items-center"
+          className="flex flex-col md:flex-row md:gap-x-4 gap-y-4 justify-center items-center"
         >
           <p className="flex items-center gap-x-2 font-bold">
             جميع الحقوق محفوظة {year}

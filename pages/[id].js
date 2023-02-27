@@ -2,10 +2,13 @@ import Head from "next/head";
 import React from "react";
 import About from "../components/About";
 import Footer from "../components/Footer";
+import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
 import UserDetails from "../components/UserDetails";
+import { useAuth } from "../context/AuthContext";
 
 const UserPage = () => {
+  const { user } = useAuth();
   return (
     <div>
       <Head>
@@ -15,7 +18,8 @@ const UserPage = () => {
       </Head>
       <main>
         <Navbar />
-        <UserDetails />
+        {user === null ? <Loading /> : <UserDetails user={user} />}
+
         <About />
       </main>
       <footer>
