@@ -134,20 +134,20 @@ const Hero = () => {
   };
 
   return (
-    <div className="w-full py-8">
+    <div className="w-full pt-2">
       <div className="container">
-        <div dir="ltr" className="grid grid-cols-12 gap-y-8 gap-x-4">
-          <div className="col-span-12 md:col-span-6 flex items-center justify-center">
+        <div dir="ltr" className="grid grid-cols-12 gap-y-8 gap-x-2">
+          <div className="col-span-12 md:col-span-6 flex items-center justify-center min-h-[260px] md:min-h-[440px] relative ">
             <Image
               src="/pp.jpg"
               // src="/t.png"
-              width={500}
-              height={700}
-              className="object-cover hover:shadow-xl duration-500 ease-in shadow-sm shadow-gray-600 "
+
+              className="object-cover hover:shadow-xl duration-500 ease-in shadow-sm shadow-gray-600"
               alt=""
+              fill
             />
           </div>
-          <div className="col-span-12 md:col-span-6 flex flex-col justify-center items-center">
+          <div className="col-span-12 md:col-span-6 flex flex-col justify-center items-center ">
             <p dir="rtl" className="text-tasi text-2xl md:text-5xl text-right">
               منصة تصويت ودردشة مع متداولين في سوق الأسهم السعودي (تداول ).
             </p>

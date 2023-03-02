@@ -50,7 +50,8 @@ const Navbar = () => {
         <nav className="flex justify-between items-center">
           <Link href="/">
             <Image
-              src="/logo/logo.png"
+              src="/logo/logo-o.png"
+              // src="/logo/logo.png"
               alt="/"
               height={70}
               width={150}
@@ -114,7 +115,7 @@ function DropUser({ username }) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute left-2 mt-1 min-w-[160px] max-w-[200px] origin-top-left divide-y divide-gray-100 rounded bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none py-1">
+          <Menu.Items className="absolute left-2 mt-1 min-w-[160px] max-w-[200px] origin-top-left divide-y divide-gray-100 rounded bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none py-1 z-[999]">
             <div className="px-1 py-1 ">
               <Menu.Item>
                 <button

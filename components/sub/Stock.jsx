@@ -58,6 +58,7 @@ const Stock = () => {
       ws.onmessage = function incoming(message) {
         const next = Yaticker.decode(new Buffer(message.data, "base64"));
         setData(next);
+        console.log(next);
       };
     });
   }, [refresh]);

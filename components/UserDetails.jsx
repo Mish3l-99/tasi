@@ -9,6 +9,7 @@ import { IoEnterOutline } from "react-icons/io5";
 import { useAuth } from "../context/AuthContext";
 import { db, storage } from "../firebase";
 import { MdSystemUpdateAlt } from "react-icons/md";
+import { AiOutlineFileImage } from "react-icons/ai";
 
 const UserDetails = ({ user }) => {
   const {
@@ -130,15 +131,19 @@ const UserDetails = ({ user }) => {
     setForm((form) => ({ ...form, [e.target.name]: e.target.value }));
   };
 
+  const enterRoom = () => {
+    window.location.href = "/room";
+  };
+
   return (
     <div className="py-8 mb-24">
       <div className="container">
         <div className="flex flex-col gap-y-4">
-          <div className="flex flex-col md:flex-row gap-x-4 md:gap-x-8 items-center md:items-start">
+          <div className="flex flex-col md:flex-row gap-x-4 md:gap-x-8 items-center justify-center md:items-start">
             <div className="mb-2 w-24 h-24 md:w-36 md:h-36 p-2 rounded-full bg-slate-700 text-white flex items-center justify-center relative">
               {user.image ? (
                 <Image
-                  className="rounded-full"
+                  className="rounded-full z-[998]"
                   alt="/"
                   src={user?.image}
                   fill
@@ -163,8 +168,21 @@ const UserDetails = ({ user }) => {
             >
               <div className="grid grid-cols-6">
                 <div className="col-span-2">صورة الملف :</div>
-                <div className="col-span-4">
-                  <input type="file" className="w-full" />
+                <div className="col-span-4 relative">
+                  <input
+                    type="file"
+                    className="w-full opacity-0 "
+                    id="img_file"
+                  />
+                  <div className="w-full absolute top-0 h-full">
+                    <label
+                      htmlFor="img_file"
+                      className="w-full h-full shadow py-[1px] px-3 rounded bg-gray-100 flex gap-x-2 items-center hover:cursor-pointer"
+                    >
+                      إختيار ملف
+                      <AiOutlineFileImage />
+                    </label>
+                  </div>
                 </div>
               </div>
               <div className="grid grid-cols-6 items-center">
@@ -236,12 +254,13 @@ const UserDetails = ({ user }) => {
             </form>
           </div>
           <div className="mt-4 flex gap-x-8 items-center justify-center">
-            <Link href="/room">
-              <button className="bg-tasi px-2 py-[2px] text-white rounded flex items-center gap-x-2 hover:bg-green-900 duration-500">
-                الدخول للمحادثة
-                <IoEnterOutline className="scale-x-[-1]" />
-              </button>
-            </Link>
+            <button
+              onClick={() => enterRoom()}
+              className="bg-tasi px-2 py-[2px] text-white rounded flex items-center gap-x-2 hover:bg-green-900 duration-500"
+            >
+              الدخول للمحادثة
+              <IoEnterOutline className="scale-x-[-1]" />
+            </button>
           </div>
         </div>
       </div>
